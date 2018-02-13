@@ -14,11 +14,11 @@ RUN apt-get -y update && \
 
 RUN pip install -r requirements.txt
 
-RUN invoke create-settings \
+RUN invoke create_settings \
          --settings-path ~/.config/wger/settings.py
 
-ENTRYPOINT invoke bootstrap-wger \
+ENTRYPOINT invoke bootstrap_wger \
          --settings-path ~/.config/wger/settings.py \
          --no-start-server && \
-         invoke start-wger --address 0.0.0.0 --port 8000
+         invoke start_wger --address 0.0.0.0 --port 8000
 

@@ -9,11 +9,13 @@ services:
     ports:
       - 8000:8000
     environment:
+      - PYTHONUNBUFFERED=1
       - DB_ENGINE=django.db.backends.postgresql
       - DB_USER=postgres
       - DB_HOST=wger_db
       - DB_PORT=5432
       - DB_NAME=postgres
+      - SECRET_KEY=blahblah
     networks:
       - wger_network
     depends_on:
