@@ -1,5 +1,16 @@
 const gulp = require('gulp');
 const eslint = require('gulp-eslint');
+const flake8 = require('@petervanderdoes/gulp-flake8');
+
+const onfiles = ['**/*py',
+  '!**/venv/**',
+  '!**/extras/**',
+  '!**/build/**',
+  '!**/dist/**',
+  '!**/node_modules/**',
+  '!**/migrations/**',
+  '!**/docs/**',
+  '!settings.py'];
 
 gulp.task('lint-js', function () {
   // ESLint ignores files with "node_modules" paths.
@@ -18,7 +29,14 @@ gulp.task('lint-js', function () {
     .pipe(eslint.failAfterError());
 });
 
-gulp.task('lint', ['lint-js']);
+gulp.task('lint-flake8', function () {
+  return gulp.src(onfiles)
+    .pipe(flake8('.flake8'))
+    .pipe(flake8.reporter('fancy'))
+    .pipe(flake8.failOnError());
+});
+
+gulp.task('lint', ['lint-js', 'lint-flake8']);
 
 gulp.task('default', ['lint'], function () {
   // This will only run if the lint task is successful...

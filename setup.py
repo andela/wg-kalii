@@ -7,12 +7,8 @@
     :license: GNU GPL, see LICENSE for more details.
 """
 
-from setuptools import (
-    setup,
-    find_packages
-)
+from setuptools import (setup, find_packages)
 from wger import get_version
-
 
 with open('README.rst') as readme:
     long_description = readme.read()

@@ -1,4 +1,3 @@
-
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
@@ -6,14 +5,16 @@ from django.db import migrations, models
 
 
 def update_permission_names(apps, schema_editor):
-    '''
+    """
     Updates the wording of our three custom gym permissions
-    '''
+    """
     Permission = apps.get_model("auth", "Permission")
 
-    for name in ['Trainer, can see the users for a gym',
-                 'Admin, can manage users for a gym',
-                 'Admin, can administrate the different gyms']:
+    for name in [
+            'Trainer, can see the users for a gym',
+            'Admin, can manage users for a gym',
+            'Admin, can administrate the different gyms'
+    ]:
 
         permissions = Permission.objects.filter(name=name)
         if permissions.exists():

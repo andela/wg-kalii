@@ -32,7 +32,6 @@ from wger.manager.models import Workout, Day
 from wger.manager.forms import DayForm
 from wger.utils.generic_views import WgerFormMixin
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -40,20 +39,21 @@ logger = logging.getLogger(__name__)
 # Day functions
 # ************************
 class DayView(WgerFormMixin, LoginRequiredMixin):
-    '''
+    """
     Base generic view for exercise day
-    '''
+    """
 
     model = Day
     fields = ('description', 'day')
 
     def get_success_url(self):
-        return reverse('manager:workout:view', kwargs={'pk': self.object.training_id})
+        return reverse(
+            'manager:workout:view', kwargs={'pk': self.object.training_id})
 
     def get_form(self, form_class=DayForm):
-        '''
+        """
         Filter the days of the week that are alreeady used by other days
-        '''
+        """
 
         # Get the form
         form = super(DayView, self).get_form(form_class)
@@ -72,15 +72,16 @@ class DayView(WgerFormMixin, LoginRequiredMixin):
         used_days.sort()
 
         # Set the queryset for day
-        form.fields['day'].queryset = DaysOfWeek.objects.exclude(id__in=used_days)
+        form.fields['day'].queryset = DaysOfWeek.objects.exclude(
+            id__in=used_days)
 
         return form
 
 
 class DayEditView(DayView, UpdateView):
-    '''
+    """
     Generic view to update an existing exercise day
-    '''
+    """
 
     form_action_urlname = 'manager:day:edit'
 
@@ -92,45 +93,48 @@ class DayEditView(DayView, UpdateView):
 
 
 class DayCreateView(DayView, CreateView):
-    '''
+    """
     Generic view to add a new exercise day
-    '''
+    """
 
     title = ugettext_lazy('Add workout day')
     owner_object = {'pk': 'workout_pk', 'class': Workout}
 
     def form_valid(self, form):
-        '''
+        """
         Set the workout this day belongs to
-        '''
-        form.instance.training = Workout.objects.get(pk=self.kwargs['workout_pk'])
+        """
+        form.instance.training = Workout.objects.get(
+            pk=self.kwargs['workout_pk'])
         return super(DayCreateView, self).form_valid(form)
 
     # Send some additional data to the template
     def get_context_data(self, **kwargs):
         context = super(DayCreateView, self).get_context_data(**kwargs)
-        context['form_action'] = reverse('manager:day:add',
-                                         kwargs={'workout_pk': self.kwargs['workout_pk']})
+        context['form_action'] = reverse(
+            'manager:day:add',
+            kwargs={'workout_pk': self.kwargs['workout_pk']})
         return context
 
 
 @login_required
 def delete(request, pk):
-    '''
+    """
     Deletes the given day
-    '''
+    """
     day = get_object_or_404(Day, training__user=request.user, pk=pk)
     day.delete()
-    return HttpResponseRedirect(reverse('manager:workout:view', kwargs={'pk': day.training_id}))
+    return HttpResponseRedirect(
+        reverse('manager:workout:view', kwargs={'pk': day.training_id}))
 
 
 @login_required
 def view(request, id):
-    '''
+    """
     Renders a day as shown in the workout overview.
 
     This function is to be used with AJAX calls.
-    '''
+    """
     template_data = {}
 
     # Load day and check if its workout belongs to the user

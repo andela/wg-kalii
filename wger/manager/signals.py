@@ -14,18 +14,16 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 
-
 from django.db.models.signals import post_save, post_delete
 
 from wger.gym.helpers import get_user_last_activity
 from wger.manager.models import WorkoutLog, WorkoutSession
-from wger.core.models import UserCache
 
 
 def update_activity_cache(sender, instance, **kwargs):
-    '''
+    """
     Update the user's cached last activity date
-    '''
+    """
 
     user = instance.user
     user.usercache.last_activity = get_user_last_activity(user)

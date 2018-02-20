@@ -12,7 +12,6 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 
-
 from django.core.urlresolvers import reverse
 
 from wger.core.tests.base_testcase import WorkoutManagerTestCase
@@ -22,14 +21,14 @@ from wger.weight.models import WeightEntry
 
 
 class DashboardTestCase(WorkoutManagerTestCase):
-    '''
+    """
     Dashboard (landing page) test case
-    '''
+    """
 
     def dashboard(self):
-        '''
+        """
         Helper function to test the dashboard
-        '''
+        """
 
         response = self.client.get(reverse('core:index'))
 
@@ -75,10 +74,14 @@ class DashboardTestCase(WorkoutManagerTestCase):
         #
         # 3. Add a weight entry
         #
-        self.client.post(reverse('weight:add'),
-                         {'weight': 100,
-                          'date': '2012-01-01',
-                          'user': 1},)
+        self.client.post(
+            reverse('weight:add'),
+            {
+                'weight': 100,
+                'date': '2012-01-01',
+                'user': 1
+            },
+        )
         response = self.client.get(reverse('core:dashboard'))
 
         self.assertEqual(response.status_code, 200)
@@ -88,9 +91,9 @@ class DashboardTestCase(WorkoutManagerTestCase):
         self.assertTrue(response.context['weekdays'])
 
     def test_dashboard_logged_in(self):
-        '''
+        """
         Test index page as a logged in user
-        '''
+        """
 
         self.user_login('admin')
         self.dashboard()

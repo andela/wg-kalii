@@ -21,7 +21,7 @@
  *
  **************************************************************/
 
-#main-footer{
+# -footer{
     background: none repeat scroll 0% 0% #EEE;
     border-top: 1px solid #E5E5E5;
     border-bottom: 1px solid #000;
@@ -29,7 +29,7 @@
     padding-bottom: 1em;
 }
 
-#main{
+# {
     background-color: #FFF;
 }
 
@@ -124,7 +124,7 @@ a:hover img
     -webkit-filter: grayscale(0%);
     -moz-filter: grayscale(0%);
     -ms-filter: grayscale(0%);
-    -o-filter: grayscale(0%);	
+    -o-filter: grayscale(0%);
 }
 */
 
@@ -142,7 +142,7 @@ div.muscle-background
 /*
  * Set an additional padding to the generated DIV on the edit set page
  */
-#exercise-search-log{
+# -search-log{
     padding-left: 1em;
 }
 
@@ -172,7 +172,7 @@ header h1{
 }
 
 header a,
-header a:hover, 
+header a:hover,
 header a:focus{
     color:white;
     font-size:90%;
@@ -198,11 +198,11 @@ header span.regular{
 /*
  * Make more space for the page title
  */
-#page-title{
+# -title{
     margin-top: 0.5em;
 }
 
-#content-wrapper{
+# -wrapper{
     padding-top: 0.8em;
 }
 
@@ -267,7 +267,7 @@ div.info a, div.info a:hover, div.info a:active{
 /**************************************************************
  * Set edit window
  **************************************************************/
-#slider{
+# {
     width: 91%;
     float: right;
     margin-right: 1em;
@@ -277,7 +277,7 @@ div.info a, div.info a:hover, div.info a:active{
 /**************************************************************
  * Carousel on the feature page
  **************************************************************/
-#feature-carousel .carousel-caption
+# -carousel .carousel-caption
 {
     background-color: rgba(0, 0, 0, 0.75);
     position: relative;
@@ -289,6 +289,6 @@ div.info a, div.info a:hover, div.info a:active{
 /**************************************************************
  * 'Your ...' shoutouts on the feature page
  **************************************************************/
-#shoutout h2:first-child {
+#  h2:first-child {
     margin-top: 0;
 }
