@@ -16,39 +16,36 @@ from django.core.files import File
 from django.core.urlresolvers import reverse
 
 from wger.core.tests.base_testcase import (
-    WorkoutManagerTestCase,
-    WorkoutManagerEditTestCase,
-    WorkoutManagerAddTestCase,
-    WorkoutManagerDeleteTestCase
-)
+    WorkoutManagerTestCase, WorkoutManagerEditTestCase,
+    WorkoutManagerAddTestCase, WorkoutManagerDeleteTestCase)
 from wger.exercises.models import Exercise, ExerciseImage
 
 
 class MainImageTestCase(WorkoutManagerTestCase):
-    '''
+    """
     Tests the methods to make sure there is always a main image per picture
-    '''
+    """
 
     def save_image(self, exercise, filename, db_filename=None):
-        '''
+        """
         Helper function to save an image to an exercise
-        '''
+        """
         if not db_filename:
             db_filename = filename
         image = ExerciseImage()
         image.exercise = exercise
         image.status = ExerciseImage.STATUS_ACCEPTED
-        image.image.save(
-            filename,
-            File(open('wger/exercises/tests/{0}'.format(filename), 'rb'))
-        )
+        image.image.save(filename,
+                         File(
+                             open('wger/exercises/tests/{0}'.format(filename),
+                                  'rb')))
         image.save()
-        return(image.pk)
+        return (image.pk)
 
     def test_auto_main_image(self):
-        '''
+        """
         Tests that the first uploaded image is automatically a main image
-        '''
+        """
 
         exercise = Exercise.objects.get(pk=2)
         pk = self.save_image(exercise, 'protestschwein.jpg')
@@ -57,9 +54,9 @@ class MainImageTestCase(WorkoutManagerTestCase):
         self.assertTrue(image.is_main)
 
     def test_auto_main_image_multiple(self):
-        '''
+        """
         Tests that there is always a main image after deleting one
-        '''
+        """
 
         exercise = Exercise.objects.get(pk=2)
         pk1 = self.save_image(exercise, 'protestschwein.jpg')
@@ -72,9 +69,9 @@ class MainImageTestCase(WorkoutManagerTestCase):
         self.assertFalse(image.is_main)
 
     def test_delete_main_image(self):
-        '''
+        """
         Tests that there is always a main image after deleting one
-        '''
+        """
 
         exercise = Exercise.objects.get(pk=2)
         pk1 = self.save_image(exercise, 'protestschwein.jpg')
@@ -102,34 +99,35 @@ class MainImageTestCase(WorkoutManagerTestCase):
 
 
 class AddExerciseImageTestCase(WorkoutManagerAddTestCase):
-    '''
+    """
     Tests adding an image to an exercise
-    '''
+    """
 
     object_class = ExerciseImage
     url = reverse('exercise:image:add', kwargs={'exercise_pk': 1})
     user_fail = False
-    data = {'is_main': True,
-            'image': open('wger/exercises/tests/protestschwein.jpg', 'rb'),
-            'license': 1}
+    data = {
+        'is_main': True,
+        'image': open('wger/exercises/tests/protestschwein.jpg', 'rb'),
+        'license': 1
+    }
 
 
 class EditExerciseImageTestCase(WorkoutManagerEditTestCase):
-    '''
+    """
     Tests editing an image to an exercise
-    '''
+    """
 
     object_class = ExerciseImage
     url = 'exercise:image:edit'
     pk = 2
-    data = {'is_main': True,
-            'license': 1}
+    data = {'is_main': True, 'license': 1}
 
 
 class DeleteExerciseImageTestCase(WorkoutManagerDeleteTestCase):
-    '''
+    """
     Tests deleting an image to an exercise
-    '''
+    """
 
     object_class = ExerciseImage
     url = reverse('exercise:image:delete', kwargs={'exercise_pk': 1, 'pk': 1})
@@ -138,9 +136,9 @@ class DeleteExerciseImageTestCase(WorkoutManagerDeleteTestCase):
 
 # TODO: fix test
 # class ExerciseImagesApiTestCase(api_base_test.ApiBaseResourceTestCase):
-#     '''
+#     """
 #     Tests the exercise image overview resource
-#     '''
+#     """
 #     pk = 1
 #     resource = ExerciseImage
 #     private_resource = False

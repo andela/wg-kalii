@@ -86,7 +86,7 @@ body {
     overflow-x: hidden; /* Prevent scroll on narrow devices */
 }
 
-#main-template {
+# -template {
     overflow-x: hidden;
 }
 

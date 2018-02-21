@@ -11,6 +11,7 @@ venv-django/
 # Distribution / packaging
 .Python
 env/
+venv/
 build/
 develop-eggs/
 dist/
@@ -49,7 +50,6 @@ coverage.xml
 
 # Django stuff:
 *.log
-settings*.py
 *.sqlite
 /CACHE
 
@@ -62,6 +62,7 @@ target/
 # IDE
 .idea/
 
-# External Libraries 
+# External Libraries
 wger/core/static/bower_components
 node_modules
+*.env

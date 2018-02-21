@@ -19,31 +19,24 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.utils.translation import ugettext_lazy, ugettext as _
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 
-from django.views.generic import (
-    DeleteView,
-    CreateView,
-    UpdateView,
-    ListView
-)
+from django.views.generic import (DeleteView, CreateView, UpdateView, ListView)
 
 from wger.nutrition.models import WeightUnit
 from wger.utils.constants import PAGINATION_OBJECTS_PER_PAGE
 from wger.utils.language import load_language
-from wger.utils.generic_views import (
-    WgerFormMixin,
-    WgerDeleteMixin
-)
+from wger.utils.generic_views import (WgerFormMixin, WgerDeleteMixin)
 
 logger = logging.getLogger(__name__)
+
 # ************************
 # Weight units functions
 # ************************
 
 
 class WeightUnitListView(PermissionRequiredMixin, ListView):
-    '''
+    """
     Generic view to list all weight units
-    '''
+    """
 
     model = WeightUnit
     template_name = 'units/list.html'
@@ -52,19 +45,17 @@ class WeightUnitListView(PermissionRequiredMixin, ListView):
     permission_required = 'nutrition.add_ingredientweightunit'
 
     def get_queryset(self):
-        '''
+        """
         Only show ingredient units in the current user's language
-        '''
+        """
         return WeightUnit.objects.filter(language=load_language())
 
 
-class WeightUnitCreateView(WgerFormMixin,
-                           LoginRequiredMixin,
-                           PermissionRequiredMixin,
-                           CreateView):
-    '''
+class WeightUnitCreateView(WgerFormMixin, LoginRequiredMixin,
+                           PermissionRequiredMixin, CreateView):
+    """
     Generic view to add a new weight unit for ingredients
-    '''
+    """
 
     model = WeightUnit
     fields = ['name']
@@ -80,13 +71,11 @@ class WeightUnitCreateView(WgerFormMixin,
         return super(WeightUnitCreateView, self).form_valid(form)
 
 
-class WeightUnitDeleteView(WgerDeleteMixin,
-                           LoginRequiredMixin,
-                           PermissionRequiredMixin,
-                           DeleteView):
-    '''
+class WeightUnitDeleteView(WgerDeleteMixin, LoginRequiredMixin,
+                           PermissionRequiredMixin, DeleteView):
+    """
     Generic view to delete a weight unit
-    '''
+    """
 
     model = WeightUnit
     fields = ['name']
@@ -96,21 +85,19 @@ class WeightUnitDeleteView(WgerDeleteMixin,
     messages = ugettext_lazy('Successfully deleted')
 
     def get_context_data(self, **kwargs):
-        '''
+        """
         Send some additional data to the template
-        '''
+        """
         context = super(WeightUnitDeleteView, self).get_context_data(**kwargs)
         context['title'] = _(u'Delete {0}?').format(self.object)
         return context
 
 
-class WeightUnitUpdateView(WgerFormMixin,
-                           LoginRequiredMixin,
-                           PermissionRequiredMixin,
-                           UpdateView):
-    '''
+class WeightUnitUpdateView(WgerFormMixin, LoginRequiredMixin,
+                           PermissionRequiredMixin, UpdateView):
+    """
     Generic view to update an weight unit
-    '''
+    """
 
     model = WeightUnit
     fields = ['name']
@@ -121,9 +108,9 @@ class WeightUnitUpdateView(WgerFormMixin,
         return reverse('nutrition:weight_unit:list')
 
     def get_context_data(self, **kwargs):
-        '''
+        """
         Send some additional data to the template
-        '''
+        """
         context = super(WeightUnitUpdateView, self).get_context_data(**kwargs)
         context['title'] = _(u'Edit {0}').format(self.object)
         return context

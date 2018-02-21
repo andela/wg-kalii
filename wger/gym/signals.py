@@ -14,22 +14,17 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 
-
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 
-from wger.gym.models import (
-    Gym,
-    GymConfig,
-    UserDocument
-)
+from wger.gym.models import (Gym, GymConfig, UserDocument)
 
 
 @receiver(post_save, sender=Gym)
 def gym_config(sender, instance, created, **kwargs):
-    '''
+    """
     Creates a configuration entry for newly added gyms
-    '''
+    """
     if not created or kwargs['raw']:
         return
 
@@ -40,8 +35,8 @@ def gym_config(sender, instance, created, **kwargs):
 
 @receiver(post_delete, sender=UserDocument)
 def delete_user_document_on_delete(sender, instance, **kwargs):
-    '''
+    """
     Deletes the document from the disk as well
-    '''
+    """
 
     instance.document.delete(save=False)

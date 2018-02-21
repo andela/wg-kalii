@@ -21,10 +21,7 @@ from django.core.urlresolvers import reverse
 
 from wger.core.demo import create_demo_entries, create_temporary_user
 from wger.core.tests.base_testcase import WorkoutManagerTestCase
-from wger.manager.models import (Day,
-                                 Schedule,
-                                 ScheduleStep,
-                                 Workout,
+from wger.manager.models import (Day, Schedule, ScheduleStep, Workout,
                                  WorkoutLog)
 from wger.nutrition.models import Meal
 from wger.nutrition.models import NutritionPlan
@@ -32,27 +29,30 @@ from wger.weight.models import WeightEntry
 
 
 class DemoUserTestCase(WorkoutManagerTestCase):
-    '''
+    """
     Tests the demo user
-    '''
+    """
 
     @staticmethod
     def count_temp_users():
-        '''
+        """
         Counts the number of temporary users
-        '''
+        """
         return User.objects.filter(userprofile__is_temporary=1).count()
 
     def test_demo_data_no_guest_account(self):
-        '''
+        """
         Tests that the helper function creates demo data (workout, etc.)
         for the demo users
-        '''
-        with self.settings(WGER_SETTINGS={'USE_RECAPTCHA': True,
-                                          'REMOVE_WHITESPACE': False,
-                                          'ALLOW_REGISTRATION': True,
-                                          'ALLOW_GUEST_USERS': False,
-                                          'TWITTER': False}):
+        """
+        with self.settings(
+                WGER_SETTINGS={
+                    'USE_RECAPTCHA': True,
+                    'REMOVE_WHITESPACE': False,
+                    'ALLOW_REGISTRATION': True,
+                    'ALLOW_GUEST_USERS': False,
+                    'TWITTER': False
+                }):
             self.assertEqual(self.count_temp_users(), 1)
             self.client.get(reverse('core:dashboard'))
             self.assertEqual(self.count_temp_users(), 1)
@@ -60,10 +60,10 @@ class DemoUserTestCase(WorkoutManagerTestCase):
             self.assertEqual(self.count_temp_users(), 1)
 
     def test_demo_data_guest_account(self):
-        '''
+        """
         Tests that the helper function creates demo data (workout, etc.)
         for the demo users
-        '''
+        """
         self.client.get(reverse('core:dashboard'))
         self.assertEqual(self.count_temp_users(), 2)
         user = User.objects.get(pk=User.objects.latest('id').id)
@@ -78,7 +78,8 @@ class DemoUserTestCase(WorkoutManagerTestCase):
 
         # Schedule
         self.assertEqual(Schedule.objects.filter(user=user).count(), 3)
-        self.assertEqual(ScheduleStep.objects.filter(schedule__user=user).count(), 6)
+        self.assertEqual(
+            ScheduleStep.objects.filter(schedule__user=user).count(), 6)
 
         # Nutrition
         self.assertEqual(NutritionPlan.objects.filter(user=user).count(), 1)
@@ -88,10 +89,10 @@ class DemoUserTestCase(WorkoutManagerTestCase):
         self.assertEqual(WeightEntry.objects.filter(user=user).count(), 19)
 
     def test_demo_data_body_weight(self):
-        '''
+        """
         Tests that the helper function that creates demo data filters out
         existing dates for the weight entries
-        '''
+        """
         self.client.get(reverse('core:dashboard'))
         self.assertEqual(self.count_temp_users(), 2)
         user = User.objects.get(pk=4)
@@ -99,9 +100,10 @@ class DemoUserTestCase(WorkoutManagerTestCase):
         temp = []
         for i in range(1, 5):
             creation_date = datetime.date.today() - datetime.timedelta(days=i)
-            entry = WeightEntry(user=user,
-                                weight=80 + 0.5 * i + random.randint(1, 3),
-                                date=creation_date)
+            entry = WeightEntry(
+                user=user,
+                weight=80 + 0.5 * i + random.randint(1, 3),
+                date=creation_date)
             temp.append(entry)
         WeightEntry.objects.bulk_create(temp)
         create_demo_entries(user)
@@ -110,10 +112,10 @@ class DemoUserTestCase(WorkoutManagerTestCase):
         self.assertEqual(WeightEntry.objects.filter(user=user).count(), 19)
 
     def test_demo_user(self):
-        '''
+        """
         Tests that temporary users are automatically created when visiting
         URLs that need a user present
-        '''
+        """
 
         self.assertEqual(self.count_temp_users(), 1)
 
@@ -152,26 +154,34 @@ class DemoUserTestCase(WorkoutManagerTestCase):
         self.assertEqual(self.count_temp_users(), 2)
 
     def test_demo_user_notice(self):
-        '''
+        """
         Tests that demo users see a notice on every page
-        '''
+        """
         demo_notice_text = 'You are using a guest account'
         self.user_login('demo')
-        self.assertContains(self.client.get(reverse('core:dashboard')), demo_notice_text)
-        self.assertContains(self.client.get(reverse('manager:workout:overview')),
-                            demo_notice_text)
-        self.assertContains(self.client.get(reverse('exercise:exercise:overview')),
-                            demo_notice_text)
-        self.assertContains(self.client.get(reverse('exercise:muscle:overview')), demo_notice_text)
-        self.assertContains(self.client.get(reverse('nutrition:plan:overview')),
-                            demo_notice_text)
-        self.assertContains(self.client.get(reverse('software:issues')), demo_notice_text)
-        self.assertContains(self.client.get(reverse('software:license')), demo_notice_text)
+        self.assertContains(
+            self.client.get(reverse('core:dashboard')), demo_notice_text)
+        self.assertContains(
+            self.client.get(reverse('manager:workout:overview')),
+            demo_notice_text)
+        self.assertContains(
+            self.client.get(reverse('exercise:exercise:overview')),
+            demo_notice_text)
+        self.assertContains(
+            self.client.get(reverse('exercise:muscle:overview')),
+            demo_notice_text)
+        self.assertContains(
+            self.client.get(reverse('nutrition:plan:overview')),
+            demo_notice_text)
+        self.assertContains(
+            self.client.get(reverse('software:issues')), demo_notice_text)
+        self.assertContains(
+            self.client.get(reverse('software:license')), demo_notice_text)
 
     def test_command_delete_old_users(self):
-        '''
+        """
         Tests that old demo users are deleted by the management command
-        '''
+        """
 
         # Create some new demo users
         for i in range(0, 15):
