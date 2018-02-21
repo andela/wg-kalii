@@ -102,6 +102,9 @@ router.register(
     r'setting', manager_api_views.SettingViewSet, base_name='Setting')
 router.register(
     r'workoutlog', manager_api_views.WorkoutLogViewSet, base_name='workoutlog')
+router.register(
+    r'exercisedetails', exercises_api_views.ExerciseDetailsViewSet, 
+    base_name='exercisedetails')
 
 # Core app
 router.register(
