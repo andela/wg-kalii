@@ -27,7 +27,7 @@ from django.utils.translation import ugettext as _
 
 from wger.config.models import LanguageConfig
 from wger.exercises.api.serializers import (
-    MuscleSerializer, ExerciseSerializer, ExerciseImageSerializer, ExerciseDetailSerializer,
+    MuscleSerializer, ExerciseSerializer, ExerciseImageSerializer, ExerciseDetailsSerializer,
     ExerciseCategorySerializer, EquipmentSerializer, ExerciseCommentSerializer)
 from wger.exercises.models import (Exercise, Equipment, ExerciseCategory, 
                                    ExerciseImage, ExerciseComment, Muscle)
