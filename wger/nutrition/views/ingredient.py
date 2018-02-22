@@ -26,6 +26,7 @@ from django.contrib import messages
 from django.utils.translation import ugettext_lazy, ugettext as _
 from django.views.generic import (DeleteView, CreateView, UpdateView, ListView)
 
+from wger.core.models import Language
 from wger.nutrition.forms import UnitChooserForm
 from wger.nutrition.models import Ingredient
 from wger.utils.generic_views import (WgerFormMixin, WgerDeleteMixin)
@@ -48,6 +49,14 @@ class IngredientListView(ListView):
     context_object_name = 'ingredients_list'
     paginate_by = PAGINATION_OBJECTS_PER_PAGE
 
+    def dispatch(self, *args, **kwargs):
+        self.filter_by = self.request.GET.get('filter_by', None)
+        try:
+            self.language = Language.objects.get(short_name=self.filter_by)
+        except Language.DoesNotExist:
+            self.language = None  # No language to filter for.
+        return super().dispatch(*args, **kwargs)
+
     def get_queryset(self):
         """
         Filter the ingredients the user will see by its language
@@ -55,7 +64,10 @@ class IngredientListView(ListView):
         (the user can also want to see ingredients in English, in addition to his
         native language, see load_ingredient_languages)
         """
-        languages = load_ingredient_languages(self.request)
+
+
+        languages = load_ingredient_languages(self.request,
+                                              filter_ingredients=self.language.pk if self.language else None)
         return (Ingredient.objects.filter(language__in=languages)
                 .filter(status__in=Ingredient.INGREDIENT_STATUS_OK).only(
                     'id', 'name'))
@@ -66,6 +78,7 @@ class IngredientListView(ListView):
         """
         context = super(IngredientListView, self).get_context_data(**kwargs)
         context['show_shariff'] = True
+        context['filter_by'] = self.filter_by
         return context
 
 

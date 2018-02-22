@@ -136,3 +136,15 @@ class OverviewPlanTestCase(WorkoutManagerTestCase):
         """
 
         self.ingredient_overview(logged_in=False)
+
+    def test_ingredient_language_filter_works(self):
+        """
+        Test ingredient filter changes language on toggle
+        """
+        self.user_login()
+        response = self.client.get(
+            reverse('nutrition:ingredient:list'), {'filter_by': 'en'})
+        self.assertEqual(13, len(response.context['ingredients_list']))
+        response = self.client.get(
+            reverse('nutrition:ingredient:list'), {'filter_by': 'de'})
+        self.assertEqual(1, len(response.context['ingredients_list']))
