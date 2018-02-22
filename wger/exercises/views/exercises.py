@@ -67,8 +67,7 @@ class ExerciseListView(ListView):
         Filter to only active exercises in the configured languages
         """
         # TODO WRITE LOGIC FOR EXERCISES
-        languages = load_exercise_languages(
-                                            filter_exercises=self.language.pk if self.language else None)
+        languages = load_exercise_languages(filter_exercises=self.language.pk if self.language else None)
         return Exercise.objects.filter(language__in=languages) \
             .accepted() \
             .order_by('category__id') \

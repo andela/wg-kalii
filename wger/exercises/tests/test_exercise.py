@@ -565,7 +565,6 @@ class WorkoutCacheTestCase(WorkoutManagerTestCase):
         self.assertEqual(4, len(response.context['exercises']))
 
 
-
 # TODO: fix test, all registered users can upload exercises
 # class ExerciseApiTestCase(api_base_test.ApiBaseResourceTestCase):
 #     """

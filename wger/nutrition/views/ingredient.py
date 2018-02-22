@@ -64,8 +64,6 @@ class IngredientListView(ListView):
         (the user can also want to see ingredients in English, in addition to his
         native language, see load_ingredient_languages)
         """
-
-
         languages = load_ingredient_languages(self.request,
                                               filter_ingredients=self.language.pk if self.language else None)
         return (Ingredient.objects.filter(language__in=languages)

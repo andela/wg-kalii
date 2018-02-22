@@ -113,6 +113,7 @@ def load_ingredient_languages(request, filter_ingredients=None):
 
     return languages
 
+
 def load_exercise_languages(filter_exercises=None):
     """
     :param filter_exercises: Language Primary Key
@@ -126,4 +127,3 @@ def load_exercise_languages(filter_exercises=None):
         languages = list([Language.objects.get(pk=filter_exercises)])
 
     return languages
-
