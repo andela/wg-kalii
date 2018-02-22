@@ -313,7 +313,6 @@ function wgerInitCaloriesCalculator() {
 }
 
 // Select URL function
-<<<<<<< HEAD
 $(function () {
   $('#dynamic-select').on('change', function () {
     var url = $(this).val();
@@ -323,14 +322,3 @@ $(function () {
     return false;
   });
 });
-=======
-    $(function(){
-      $('#dynamic-select').on('change', function () {
-        var url = $(this).val();
-        if (url) {
-        window.location = url;
-        }
-        return false;
-      });
-    });
->>>>>>> [Feature #154953736] Add filter by language functionality to source out the enormous exercise and Ingredients database
