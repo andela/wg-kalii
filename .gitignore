@@ -40,6 +40,9 @@ htmlcov/
 .cache
 nosetests.xml
 coverage.xml
+.ropeproject/
+.vim/
+.vscode/
 
 # Translations
 *.mo
