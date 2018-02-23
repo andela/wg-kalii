@@ -27,9 +27,10 @@ from django.utils.translation import ugettext as _
 
 from wger.config.models import LanguageConfig
 from wger.exercises.api.serializers import (
-    MuscleSerializer, ExerciseSerializer, ExerciseImageSerializer, ExerciseDetailsSerializer,
-    ExerciseCategorySerializer, EquipmentSerializer, ExerciseCommentSerializer)
-from wger.exercises.models import (Exercise, Equipment, ExerciseCategory, 
+    MuscleSerializer, ExerciseSerializer, ExerciseImageSerializer,
+    ExerciseDetailsSerializer, ExerciseCategorySerializer,
+    EquipmentSerializer, ExerciseCommentSerializer)
+from wger.exercises.models import (Exercise, Equipment, ExerciseCategory,
                                    ExerciseImage, ExerciseComment, Muscle)
 from wger.utils.language import load_item_languages, load_language
 from wger.utils.permissions import CreateOnlyPermission
@@ -64,9 +65,9 @@ class ExerciseDetailsViewSet(viewsets.ReadOnlyModelViewSet):
     '''
     queryset = Exercise.objects.all()
     serializer_class = ExerciseDetailsSerializer
-    filter_fields = ('category','creation_date','description','muscles',
-            'muscles_secondary', 'name','equipment','license_author',
-        )
+    filter_fields = ('category', 'creation_date', 'description', 'muscles',
+                     'muscles_secondary', 'name', 'equipment', 'license_author',
+                     )
 
 
 @api_view(['GET'])

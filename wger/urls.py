@@ -138,7 +138,8 @@ router.register(
     exercises_api_views.ExerciseCommentViewSet,
     base_name='exercisecomment')
 router.register(
-    r'exercisedetails', exercises_api_views.ExerciseDetailsViewSet, base_name='exercisedetails')
+    r'exercisedetails',
+    exercises_api_views.ExerciseDetailsViewSet, base_name='exercisedetails')
 router.register(
     r'muscle', exercises_api_views.MuscleViewSet, base_name='muscle')
 
