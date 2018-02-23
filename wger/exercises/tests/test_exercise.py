@@ -220,6 +220,23 @@ class ExerciseDetailTestCase(WorkoutManagerTestCase):
         self.exercise_detail(editor=False)
 
 
+class ExerciseDetailsAPITestCase(WorkoutManagerTestCase):
+    """
+    Tests the exercise details page
+    """
+
+    def test_exercise_detail(self, editor=False):
+        """
+        Tests the exercise details API
+        """
+        url = '/api/v2/exercisedetails/'
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'id')
+        self.assertContains(response, 'name')
+        self.assertContains(response, 'uuid')
+        self.assertContains(response, 'equipment')
+
 class ExercisesTestCase(WorkoutManagerTestCase):
     """
     Exercise test case
