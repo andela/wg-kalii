@@ -119,7 +119,8 @@ class ExerciseIndexTestCase(WorkoutManagerTestCase):
 
     def test_exercise_index_non_editor(self):
         """
-        Tests the exercise overview page as a logged in user without editor rights
+        Tests the exercise overview page as a logged in user without
+        editor rights
         """
 
         self.user_login('test')
@@ -206,7 +207,8 @@ class ExerciseDetailTestCase(WorkoutManagerTestCase):
 
     def test_exercise_detail_non_editor(self):
         """
-        Tests the exercise details page as a logged in user without editor rights
+        Tests the exercise details page as a logged in user without editor
+        rights
         """
 
         self.user_login('test')
@@ -236,6 +238,7 @@ class ExerciseDetailsAPITestCase(WorkoutManagerTestCase):
         self.assertContains(response, 'name')
         self.assertContains(response, 'uuid')
         self.assertContains(response, 'equipment')
+
 
 class ExercisesTestCase(WorkoutManagerTestCase):
     """
@@ -281,7 +284,8 @@ class ExercisesTestCase(WorkoutManagerTestCase):
 
     def add_exercise_success(self, admin=False):
         """
-        Tests adding/editing an exercise with a user with enough rights to do this
+        Tests adding/editing an exercise with a user with enough rights to do
+        this
         """
 
         # Add an exercise
@@ -371,7 +375,8 @@ class ExercisesTestCase(WorkoutManagerTestCase):
 
     def test_add_exercise_success(self):
         """
-        Tests adding/editing an exercise with a user with enough rights to do this
+        Tests adding/editing an exercise with a user with enough rights to do
+        this
         """
         self.user_login('admin')
         self.add_exercise_success(admin=True)
