@@ -60,13 +60,13 @@ class ExerciseDetailsSerializer(serializers.ModelSerializer):
     """
     Exercise details serializer
     """
-    images = ExerciseImageSerializer(read_only = True)
+    images = ExerciseImageSerializer(read_only=True)
+
     class Meta:
         model = Exercise
         field = (
-            'category','creation_date','description','muscles','muscles_secondary',
-            'name','equipment','license_author',
-        )
+            'category', 'creation_date', 'description', 'muscles',
+            'muscles_secondary', 'name', 'equipment', 'license_author', )
 
 
 class ExerciseCommentSerializer(serializers.ModelSerializer):
