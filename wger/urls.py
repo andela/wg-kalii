@@ -102,9 +102,6 @@ router.register(
     r'setting', manager_api_views.SettingViewSet, base_name='Setting')
 router.register(
     r'workoutlog', manager_api_views.WorkoutLogViewSet, base_name='workoutlog')
-router.register(
-    r'exercisedetails', exercises_api_views.ExerciseDetailsViewSet, 
-    base_name='exercisedetails')
 
 # Core app
 router.register(
@@ -140,6 +137,8 @@ router.register(
     r'exercisecomment',
     exercises_api_views.ExerciseCommentViewSet,
     base_name='exercisecomment')
+router.register(
+    r'exercisedetails', exercises_api_views.ExerciseDetailsViewSet, base_name='exercisedetails')
 router.register(
     r'muscle', exercises_api_views.MuscleViewSet, base_name='muscle')
 
