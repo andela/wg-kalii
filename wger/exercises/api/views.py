@@ -63,11 +63,14 @@ class ExerciseDetailsViewSet(viewsets.ReadOnlyModelViewSet):
     '''
     read only API endpoint for exercise details
     '''
-    queryset = Exercise.objects.all()
     serializer_class = ExerciseDetailsSerializer
-    filter_fields = ('category', 'creation_date', 'description', 'muscles',
-                     'muscles_secondary', 'name', 'equipment', 'license_author',
-                     )
+
+    def get_queryset(self):
+        queryset = Exercise.objects.all()
+        filter_value = self.request.query_params.get('id', None)
+        if filter_value is not None:
+            queryset = queryset.filter(field_name=filter_value)
+        return queryset
 
 
 @api_view(['GET'])
