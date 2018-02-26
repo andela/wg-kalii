@@ -416,6 +416,20 @@ class ExercisesTestCase(WorkoutManagerTestCase):
         result = json.loads(response.content.decode('utf8'))
         self.assertEqual(len(result['suggestions']), 0)
 
+    def test_one_exercise_details(self, editor=False):
+        """
+        Tests the exercise details API
+        """
+        response = self.client.get('/api/v2/exercisedetails/2/')
+        self.assertEqual(response.status_code, 200)
+        result = json.loads(response.content.decode('utf8'))
+        self.assertContains(response, 'id')
+        self.assertEqual(result['id'], 2)
+        self.assertContains(response, 'name')
+        self.assertEqual(result['name'], 'Very cool exercise')
+        self.assertContains(response, 'equipment')
+        self.assertEqual(result['equipment'], [])
+
     def test_search_exercise_anonymous(self):
         """
         Test deleting an exercise by an anonymous user
