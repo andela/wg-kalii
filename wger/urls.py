@@ -220,6 +220,9 @@ urlpatterns += [
     url(r'^exercisedetails/(?P<id>\d+)/$',
         exercises_api_views.ExerciseDetailsViewSet,
         name='exercisedetails')
+
+    # Social login
+    url(r'^oauth/', include('social_django.urls', namespace='social')),
 ]
 
 #
