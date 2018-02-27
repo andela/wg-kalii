@@ -33,6 +33,9 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from django.utils import translation
 from django.conf import settings
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
+
 
 from wger.core.models import Language
 from wger.utils.constants import TWOPLACES
@@ -730,3 +733,13 @@ class MealItem(models.Model):
                 nutritional_info[i]).quantize(TWOPLACES)
 
         return nutritional_info
+
+
+@receiver(post_save, sender=NutritionPlan)
+@receiver(post_delete, sender=NutritionPlan)
+@receiver(post_save, sender=MealItem)
+@receiver(post_delete, sender=MealItem)
+@receiver(post_save, sender=Meal)
+@receiver(post_delete, sender=Meal)
+def hander():
+    pass # TODO: HANDLE CACHE DELETION ON DELETE AND ON ADD
