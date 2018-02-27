@@ -232,6 +232,7 @@ class ExerciseDetailsAPITestCase(WorkoutManagerTestCase):
         Tests the exercise details API
         """
         url = '/api/v2/exercisedetails/'
+        # response = self.client.get(reverse('exercise:exercise_details'))
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'id')
@@ -437,8 +438,8 @@ class ExercisesTestCase(WorkoutManagerTestCase):
         self.assertEqual(result['license'], 2)
         self.assertEqual(result['category'], 2)
         self.assertEqual(result['language'], 2)
-        self.assertEqual(result['muscles'], [2])
-        self.assertEqual(result['muscles_secondary'], [1, 3])
+        self.assertEqual(result['muscles'][0]['id'], 2)
+        self.assertContains(response, 'muscles_secondary')
         self.assertEqual(result['equipment'], [])
 
     def test_search_exercise_anonymous(self):
