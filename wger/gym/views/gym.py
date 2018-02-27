@@ -83,14 +83,26 @@ class GymUserListView(LoginRequiredMixin, WgerMultiplePermissionRequiredMixin,
         """
         Return a list with the users, not really a queryset.
         """
-        out = {'admins': [], 'members': []}
-
-        for u in Gym.objects.get_members(
-                self.kwargs['pk']).select_related('usercache'):
+        out = {
+            'admins': [],
+            'members': [],
+            'active_members': [],
+            'inactive_members': []
+        }
+        allUsers = Gym.objects.get_members(self.kwargs['pk']).select_related('usercache')
+        for u in allUsers:
             out['members'].append({
                 'obj': u,
                 'last_log': u.usercache.last_activity
             })
+            if u.is_active:
+                out['active_members'].append({
+                    'obj': u
+                })
+            else:
+                out['inactive_members'].append({
+                    'obj': u
+                })
 
         # admins list
         for u in Gym.objects.get_admins(self.kwargs['pk']):
@@ -118,7 +130,10 @@ class GymUserListView(LoginRequiredMixin, WgerMultiplePermissionRequiredMixin,
                      _('Username'),
                      _('Name'),
                      _('Last activity')],
-            'users': context['object_list']['members']
+            'users': context['object_list']['members'],
+            'active_users': context['object_list']['active_members'],
+            'inactive_users': context['object_list']['inactive_members']
+
         }
         return context
 
