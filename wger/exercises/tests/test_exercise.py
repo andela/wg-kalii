@@ -438,7 +438,7 @@ class ExercisesTestCase(WorkoutManagerTestCase):
         self.assertEqual(result['category'], 2)
         self.assertEqual(result['language'], 2)
         self.assertEqual(result['muscles'], [2])
-        self.assertEqual(result['muscles_secondary'], [1,3])
+        self.assertEqual(result['muscles_secondary'], [1, 3])
         self.assertEqual(result['equipment'], [])
 
     def test_search_exercise_anonymous(self):
