@@ -5,6 +5,9 @@ __pycache__/
 # C extensions
 *.so
 
+#Virtual env
+venv-django/
+
 # Distribution / packaging
 .Python
 env/
@@ -66,5 +69,4 @@ target/
 wger/core/static/bower_components
 node_modules
 *.env
-.vscode/
-
+*.vscode/
