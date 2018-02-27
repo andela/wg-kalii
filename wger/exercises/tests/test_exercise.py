@@ -428,6 +428,17 @@ class ExercisesTestCase(WorkoutManagerTestCase):
         self.assertContains(response, 'name')
         self.assertEqual(result['name'], 'Very cool exercise')
         self.assertContains(response, 'equipment')
+        self.assertEqual(result['license_author'], None)
+        self.assertEqual(result['status'], '2')
+        self.assertEqual(result['description'], '')
+        self.assertEqual(result['name_original'], '')
+        self.assertContains(response, 'creation_date')
+        self.assertContains(response, 'uuid')
+        self.assertEqual(result['license'], 2)
+        self.assertEqual(result['category'], 2)
+        self.assertEqual(result['language'], 2)
+        self.assertEqual(result['muscles'], [2])
+        self.assertEqual(result['muscles_secondary'], [1,3])
         self.assertEqual(result['equipment'], [])
 
     def test_search_exercise_anonymous(self):
