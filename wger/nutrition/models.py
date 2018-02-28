@@ -749,10 +749,8 @@ def handle_cache(sender, **kwargs):
     :param kwargs: dict with instance of model
     :return: None
     """
-    model =  kwargs.get('instance')
+    model = kwargs.get('instance')
     if isinstance(model, (Meal, MealItem)):
         cache.delete(cache_mapper.get_nutrition_key(model.get_owner_object().id))
     else:
         cache.delete(cache_mapper.get_nutrition_key(model.id))
-
-
