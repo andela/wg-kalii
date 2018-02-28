@@ -741,5 +741,18 @@ class MealItem(models.Model):
 @receiver(post_delete, sender=MealItem)
 @receiver(post_save, sender=Meal)
 @receiver(post_delete, sender=Meal)
-def hander():
-    pass # TODO: HANDLE CACHE DELETION ON DELETE AND ON ADD
+def handle_cache(sender, **kwargs):
+    """
+    Deletes the cache data when the nutrition database is changed
+    so as not to return obsolete cache copy.
+    :param sender: The sender signal
+    :param kwargs: dict with instance of model
+    :return: None
+    """
+    model =  kwargs.get('instance')
+    if isinstance(model, (Meal, MealItem)):
+        cache.delete(cache_mapper.get_nutrition_key(model.get_owner_object().id))
+    else:
+        cache.delete(cache_mapper.get_nutrition_key(model.id))
+
+
