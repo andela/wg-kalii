@@ -160,6 +160,12 @@ class WorkoutManagerTestCase(BaseTestCase, TestCase):
         self.current_user = user
         self.current_password = password
 
+    def new_user_login(self):
+        '''
+        Login the user, by default as 'admin'
+        '''
+        self.client.login(username='test1', password='test_pass')
+
     def user_logout(self):
         """
         Visit the logout page
