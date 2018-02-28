@@ -21,7 +21,7 @@
  *
  **************************************************************/
 
-# -footer{
+#main-footer{
     background: none repeat scroll 0% 0% #EEE;
     border-top: 1px solid #E5E5E5;
     border-bottom: 1px solid #000;
@@ -29,7 +29,7 @@
     padding-bottom: 1em;
 }
 
-# {
+#main{
     background-color: #FFF;
 }
 
@@ -142,7 +142,7 @@ div.muscle-background
 /*
  * Set an additional padding to the generated DIV on the edit set page
  */
-# -search-log{
+#exercise-search-log{
     padding-left: 1em;
 }
 
@@ -198,11 +198,11 @@ header span.regular{
 /*
  * Make more space for the page title
  */
-# -title{
+#page-title{
     margin-top: 0.5em;
 }
 
-# -wrapper{
+#content-wrapper{
     padding-top: 0.8em;
 }
 
@@ -267,7 +267,7 @@ div.info a, div.info a:hover, div.info a:active{
 /**************************************************************
  * Set edit window
  **************************************************************/
-# {
+#slider{
     width: 91%;
     float: right;
     margin-right: 1em;
@@ -277,7 +277,7 @@ div.info a, div.info a:hover, div.info a:active{
 /**************************************************************
  * Carousel on the feature page
  **************************************************************/
-# -carousel .carousel-caption
+#feature-carousel .carousel-caption
 {
     background-color: rgba(0, 0, 0, 0.75);
     position: relative;
@@ -289,6 +289,6 @@ div.info a, div.info a:hover, div.info a:active{
 /**************************************************************
  * 'Your ...' shoutouts on the feature page
  **************************************************************/
-#  h2:first-child {
+#shoutout h2:first-child {
     margin-top: 0;
 }
