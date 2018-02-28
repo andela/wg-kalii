@@ -28,7 +28,8 @@ from django.utils.translation import ugettext as _
 from wger.config.models import LanguageConfig
 from wger.exercises.api.serializers import (
     MuscleSerializer, ExerciseSerializer, ExerciseImageSerializer,
-    ExerciseCategorySerializer, EquipmentSerializer, ExerciseCommentSerializer)
+    ExerciseDetailsSerializer, ExerciseCategorySerializer,
+    EquipmentSerializer, ExerciseCommentSerializer)
 from wger.exercises.models import (Exercise, Equipment, ExerciseCategory,
                                    ExerciseImage, ExerciseComment, Muscle)
 from wger.utils.language import load_item_languages, load_language
@@ -56,6 +57,20 @@ class ExerciseViewSet(viewsets.ModelViewSet):
         # Todo is it right to call set author after save?
         obj.set_author(self.request)
         obj.save()
+
+
+class ExerciseDetailsViewSet(viewsets.ReadOnlyModelViewSet):
+    '''
+    read only API endpoint for exercise details
+    '''
+    serializer_class = ExerciseDetailsSerializer
+
+    def get_queryset(self):
+        queryset = Exercise.objects.all()
+        filter_value = self.request.query_params.get('id', None)
+        if filter_value is not None:
+            queryset = queryset.filter(field_name=filter_value)
+        return queryset
 
 
 @api_view(['GET'])
