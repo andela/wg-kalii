@@ -13,13 +13,16 @@
 # You should have received a copy of the GNU Affero General Public License
 
 import logging
+import json
 
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from django.utils.encoding import force_text
 
 from wger.core.forms import RegistrationForm
 from wger.core.forms import RegistrationFormNoCaptcha
 from wger.core.tests.base_testcase import WorkoutManagerTestCase
+from wger.core.models import UserProfile
 
 logger = logging.getLogger(__name__)
 
@@ -137,3 +140,111 @@ class RegistrationTestCase(WorkoutManagerTestCase):
             count_after = User.objects.count()
             self.assertEqual(response.status_code, 302)
             self.assertEqual(count_before, count_after)
+
+
+class RegistrationTestCaseRest(WorkoutManagerTestCase):
+    # Registration data
+    reg_data = dict(username='test_user',
+                    password='test_password', email='test@mail.com')
+
+    # Registration url
+    url = '/api/v2/register/'
+
+    def new_user_login(self):
+        '''
+        Login the user, by default as 'admin'
+        '''
+        self.client.login(username='test1', password='test_pass')
+
+    def create_user_profile(self):
+        '''
+        Create the user's profile here
+        '''
+        # Fill in the registration form
+        registration_data = {'username': 'test1',
+                             'password1': 'test_pass',
+                             'password2': 'test_pass',
+                             'email': 'my.email1@example.com',
+                             'g-recaptcha-response': 'PASSED', }
+        self.client.post(
+            reverse('core:user:registration'), registration_data)
+
+        user = User.objects.get(username="test1")
+        user_profile = UserProfile.objects.get(user=user)
+        user_profile.can_add_user = True
+        user_profile.save()
+
+    def test_unauthorized_user_cannot_access_resources(self):
+        '''
+        Test that non registered users cannot access the api
+        '''
+
+        # Test for the unauthorized user
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 403)
+
+    def test_registered_user_cannot_access_without_permission(self):
+        '''
+        Test that users without permission cannot add users via the api
+        '''
+
+        self.create_user_profile()
+        # Test for the unauthorized user
+        self.user_login()  # this user's flag can_add_user is set to False
+        response = self.client.post(self.url, data=self.reg_data)
+        self.assertEqual(response.status_code, 403)
+
+    def test_user_successfully_added_via_api(self):
+        '''
+        Test that a user is added successfully via the api by an authorized user
+        '''
+        reg_data = dict(username='test_user',
+                        password='test_password', email='test@mail.com')
+
+        self.create_user_profile()
+        # Test register via Rest API
+        self.new_user_login()  # this user's flag can_add_user is set to True
+        response = self.client.post(
+            self.url, data=reg_data)
+        reply = json.loads(response.content.decode('utf-8'))
+
+        self.assertEqual(reply['Message'],
+                         "Profile created", msg="Profile not created")
+
+    def test_duplicate_users_not_allowed(self):
+        '''
+        Test that duplicate usernames are not allowed
+        '''
+
+        self.create_user_profile()
+        self.new_user_login()  # this user's flag can_add_user is set to True
+
+        # Test username exists
+        self.client.post(self.url, data=self.reg_data)
+        duplicate_response_post = self.client.post(self.url, data=self.reg_data)
+        self.assertEqual(duplicate_response_post.status_code, 400)
+
+    def test_missing_credetial_not_allowed(self):
+        '''
+        Test that empty field in the api request data are not allowed
+        '''
+
+        self.create_user_profile()
+        # Test incomplete data
+        self.reg_data.pop('password')
+        response_post = self.client.post(self.url, data=self.reg_data)
+        self.assertEqual(response_post.status_code, 400)
+
+    def test_deformed_credential_data_not_allowed(self):
+        '''
+        Test that json request data with some fields not specified is
+        deformed json and is not allowed
+        '''
+
+        self.create_user_profile()
+        # Invalid data missing username
+        reg_data_new = {}
+        reg_data_new['email'] = 'test_email'
+        reg_data_new['password'] = 'password'
+        response_post = self.client.post(self.url, data=reg_data_new)
+        self.assertEqual(response_post.status_code, 400)

@@ -105,6 +105,9 @@ router.register(
 
 # Core app
 router.register(
+    r'register', core_api_views.UserApiRegistrationView, base_name='registration')
+router.register(r'api-users', core_api_views.ListApiUserProfileViewSet, base_name='api-users')
+router.register(
     r'userprofile', core_api_views.UserProfileViewSet, base_name='userprofile')
 router.register(
     r'language', core_api_views.LanguageViewSet, base_name='language')
@@ -137,6 +140,9 @@ router.register(
     r'exercisecomment',
     exercises_api_views.ExerciseCommentViewSet,
     base_name='exercisecomment')
+router.register(
+    r'exercisedetails',
+    exercises_api_views.ExerciseDetailsViewSet, base_name='exercisedetails')
 router.register(
     r'muscle', exercises_api_views.MuscleViewSet, base_name='muscle')
 
@@ -214,6 +220,9 @@ urlpatterns += [
         nutrition_api_views.search,
         name='ingredient-search'),
     url(r'^api/v2/', include(router.urls)),
+    url(r'^exercisedetails/(?P<id>\d+)/$',
+        exercises_api_views.ExerciseDetailsViewSet,
+        name='exercisedetails'),
 
     # Social login
     url(r'^oauth/', include('social_django.urls', namespace='social')),

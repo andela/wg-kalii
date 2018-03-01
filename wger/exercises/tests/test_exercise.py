@@ -119,7 +119,8 @@ class ExerciseIndexTestCase(WorkoutManagerTestCase):
 
     def test_exercise_index_non_editor(self):
         """
-        Tests the exercise overview page as a logged in user without editor rights
+        Tests the exercise overview page as a logged in user without
+        editor rights
         """
 
         self.user_login('test')
@@ -206,7 +207,8 @@ class ExerciseDetailTestCase(WorkoutManagerTestCase):
 
     def test_exercise_detail_non_editor(self):
         """
-        Tests the exercise details page as a logged in user without editor rights
+        Tests the exercise details page as a logged in user without editor
+        rights
         """
 
         self.user_login('test')
@@ -218,6 +220,25 @@ class ExerciseDetailTestCase(WorkoutManagerTestCase):
         """
 
         self.exercise_detail(editor=False)
+
+
+class ExerciseDetailsAPITestCase(WorkoutManagerTestCase):
+    """
+    Tests the exercise details page
+    """
+
+    def test_exercise_detail(self, editor=False):
+        """
+        Tests the exercise details API
+        """
+        url = '/api/v2/exercisedetails/'
+        # response = self.client.get(reverse('exercise:exercise_details'))
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'id')
+        self.assertContains(response, 'name')
+        self.assertContains(response, 'uuid')
+        self.assertContains(response, 'equipment')
 
 
 class ExercisesTestCase(WorkoutManagerTestCase):
@@ -264,7 +285,8 @@ class ExercisesTestCase(WorkoutManagerTestCase):
 
     def add_exercise_success(self, admin=False):
         """
-        Tests adding/editing an exercise with a user with enough rights to do this
+        Tests adding/editing an exercise with a user with enough rights to do
+        this
         """
 
         # Add an exercise
@@ -354,7 +376,8 @@ class ExercisesTestCase(WorkoutManagerTestCase):
 
     def test_add_exercise_success(self):
         """
-        Tests adding/editing an exercise with a user with enough rights to do this
+        Tests adding/editing an exercise with a user with enough rights to do
+        this
         """
         self.user_login('admin')
         self.add_exercise_success(admin=True)
@@ -393,6 +416,31 @@ class ExercisesTestCase(WorkoutManagerTestCase):
         self.assertEqual(response.status_code, 200)
         result = json.loads(response.content.decode('utf8'))
         self.assertEqual(len(result['suggestions']), 0)
+
+    def test_one_exercise_details(self, editor=False):
+        """
+        Tests the exercise details API
+        """
+        response = self.client.get('/api/v2/exercisedetails/2/')
+        self.assertEqual(response.status_code, 200)
+        result = json.loads(response.content.decode('utf8'))
+        self.assertContains(response, 'id')
+        self.assertEqual(result['id'], 2)
+        self.assertContains(response, 'name')
+        self.assertEqual(result['name'], 'Very cool exercise')
+        self.assertContains(response, 'equipment')
+        self.assertEqual(result['license_author'], None)
+        self.assertEqual(result['status'], '2')
+        self.assertEqual(result['description'], '')
+        self.assertEqual(result['name_original'], '')
+        self.assertContains(response, 'creation_date')
+        self.assertContains(response, 'uuid')
+        self.assertEqual(result['license'], 2)
+        self.assertEqual(result['category'], 2)
+        self.assertEqual(result['language'], 2)
+        self.assertEqual(result['muscles'][0]['id'], 2)
+        self.assertContains(response, 'muscles_secondary')
+        self.assertEqual(result['equipment'], [])
 
     def test_search_exercise_anonymous(self):
         """
