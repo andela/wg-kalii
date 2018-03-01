@@ -28,7 +28,12 @@ $(document).ready(function() {
             window.location.href = '/exercise/' + suggestion.data.id + '/view/'
         }
     });
+    
+    $('.nav-tabs').on('mouseenter', '[data-toggle="tab"]', function () {
+        $(this).tab('show');
+    });
 });
+
 </script>
 {% endblock %}
 
