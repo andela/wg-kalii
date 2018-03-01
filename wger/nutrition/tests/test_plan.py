@@ -175,7 +175,7 @@ class PlanApiTestCase(api_base_test.ApiBaseResourceTestCase):
     data = {'description': 'The description', 'language': 1}
 
 
-class NutritionalPlanTestCase(WorkoutManagerTestCase):
+class NutritionalPlanCacheTestCase(WorkoutManagerTestCase):
     """
     Test cache is created and deleted Nutritional plan value change
     """
@@ -188,7 +188,7 @@ class NutritionalPlanTestCase(WorkoutManagerTestCase):
         nutrition_plan.get_nutritional_values()
         self.assertTrue(cache.get(cache_mapper.get_nutrition_key(1)))
 
-    def test_nutrition_plan_is_removed_on_delete(self):
+    def test_nutrition_plan_cache_is_removed_on_delete(self):
         """
         :returns: True if nutrition cache is removed on delete
         """
@@ -198,7 +198,7 @@ class NutritionalPlanTestCase(WorkoutManagerTestCase):
         nutrition_plan.delete()
         self.assertFalse(cache.get(cache_mapper.get_nutrition_key(1)))  # asserts cache is also deleted
 
-    def test_nutrition_plan_is_changed_on_save(self):
+    def test_nutrition_plan_cache_is_changed_on_save(self):
         """
         :returns: True if a cached nutrition plan is deleted on save
         """
