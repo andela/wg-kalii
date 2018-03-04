@@ -20,6 +20,8 @@ from wger.core.tests.base_testcase import WorkoutManagerDeleteTestCase
 from wger.core.tests.base_testcase import WorkoutManagerEditTestCase
 from wger.core.tests.base_testcase import WorkoutManagerTestCase
 from wger.nutrition.models import NutritionPlan
+from django.core.cache import cache
+from wger.utils.cache import cache_mapper
 
 
 class PlanRepresentationTestCase(WorkoutManagerTestCase):
@@ -171,3 +173,37 @@ class PlanApiTestCase(api_base_test.ApiBaseResourceTestCase):
     private_resource = True
     special_endpoints = ('nutritional_values', )
     data = {'description': 'The description', 'language': 1}
+
+
+class NutritionalPlanCacheTestCase(WorkoutManagerTestCase):
+    """
+    Test cache is created and deleted Nutritional plan value change
+    """
+    def test_nutrition_plan_is_cached(self):
+        """
+        :returns: True if nutrition is cached on get value
+        """
+        self.assertFalse(cache.get(cache_mapper.get_nutrition_key(1)))
+        nutrition_plan = NutritionPlan.objects.get(pk=1)
+        nutrition_plan.get_nutritional_values()
+        self.assertTrue(cache.get(cache_mapper.get_nutrition_key(1)))
+
+    def test_nutrition_plan_cache_is_removed_on_delete(self):
+        """
+        :returns: True if nutrition cache is removed on delete
+        """
+        nutrition_plan = NutritionPlan.objects.get(pk=1)
+        nutrition_plan.get_nutritional_values()
+        self.assertTrue(cache.get(cache_mapper.get_nutrition_key(1)))
+        nutrition_plan.delete()
+        self.assertFalse(cache.get(cache_mapper.get_nutrition_key(1)))  # asserts cache is also deleted
+
+    def test_nutrition_plan_cache_is_changed_on_save(self):
+        """
+        :returns: True if a cached nutrition plan is deleted on save
+        """
+        nutrition_plan = NutritionPlan.objects.get(pk=1)
+        nutrition_plan.get_nutritional_values()
+        self.assertTrue(cache.get(cache_mapper.get_nutrition_key(1)))
+        nutrition_plan.save()  # discards the old cache
+        self.assertFalse(cache.get(cache_mapper.get_nutrition_key(1)))

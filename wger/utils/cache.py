@@ -61,6 +61,7 @@ class CacheKeyMapper(object):
 
     # Keys used by the cache
     LANGUAGE_CACHE_KEY = 'language-{0}'
+    NUTRITION_CACHE_KEY = 'nutrition-{0}'
     LANGUAGE_CONFIG_CACHE_KEY = 'language-config-{0}-{1}'
     EXERCISE_CACHE_KEY_MUSCLE_BG = 'exercise-muscle-bg-{0}'
     INGREDIENT_CACHE_KEY = 'ingredient-{0}'
@@ -113,6 +114,12 @@ class CacheKeyMapper(object):
         Return the workout canonical representation
         """
         return self.WORKOUT_LOG_LIST.format(hash_value)
+
+    def get_nutrition_key(self, param):
+        """
+        Return the nutrition cache key
+        """
+        return self.NUTRITION_CACHE_KEY.format(self.get_pk(param))
 
 
 cache_mapper = CacheKeyMapper()
