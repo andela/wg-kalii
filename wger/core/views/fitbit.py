@@ -65,7 +65,7 @@ class FitBit:
     def RefreshToken(self, token):
         """ Refresh expired access token """
         # authentication header
-        client_id = self.CLIENT_ID.encode('utf-8')
+        # client_id = self.CLIENT_ID.encode('utf-8')
         # secret = self.CLIENT_SECRET.encode('utf-8')
         headers = {
             'Authorization': os.environ.get('Authorization'),

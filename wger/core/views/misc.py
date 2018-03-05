@@ -158,13 +158,13 @@ def fitbitFetch(request):
     try:
         data = fitbit.GetWeight(token)
         for weight in data['weight']:
-            
+
             weight_entry = WeightEntry()
             weight_entry.user = request.user
             weight_entry.weight = weight['weight']
             weight_entry.date = weight['date']
             try:
-                weight_entry.save()    
+                weight_entry.save()
             except Exception as e:
                 pass
     except Exception as e:
