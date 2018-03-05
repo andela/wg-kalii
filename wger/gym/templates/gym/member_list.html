@@ -19,15 +19,16 @@ Inline css for the tab functionality
 {% block content %}
 {% if perms.gym.manage_gym or perms.gym.gym_trainer %}
 <div class="tab">
-    <a href="#" class="btn btn-info" role="button" onclick="openCity(event, 'All')">All</a>
-    <a href="#" class="btn btn-info" role="button" onclick="openCity(event, 'Active')">Active</a>
-    <a href="#" class="btn btn-info" role="button" onclick="openCity(event, 'Inactive')">Inactive</a>
+    <a class="btn btn-info" role="button" onclick="openCity(event, 'All')">All</a>
+    <a class="btn btn-info" role="button" onclick="openCity(event, 'Active')">Active</a>
+    <a class="btn btn-info" role="button" onclick="openCity(event, 'Inactive')">Inactive</a>
 </div>
 
 <div id="All" class="tabcontent">
-    
-    <h3>All gym members</h3> <span onclick="this.parentElement.style.display='none'">x</span> 
+    <h3>All gym members</h3> <span onclick="this.parentElement.style.display='none' "
+    class="topright">x</span> 
     {% include 'gym/partial_user_list.html' %}
+    <br/>
 </div>
 
 <div id="Active" class="tabcontent">
@@ -357,22 +358,22 @@ Inline css for the tab functionality
     </a>
 {% endif %}
 <script>
-function openCity(evt, cityName) {
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
+    function openCity(evt, cityName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
     }
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-    document.getElementById(cityName).style.display = "block";
-    evt.currentTarget.className += " active";
-}
 
-// Get the element with id="defaultOpen" and click on it
-document.getElementById("defaultOpen").click();
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
 </script>
 
 {% endblock %}
