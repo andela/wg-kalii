@@ -141,7 +141,7 @@ urlpatterns = [
     # The dashboard
     url(r'^dashboard$', misc.dashboard, name='dashboard'),
 
-    # fitbit 
+    # fitbit
     url(r'^fitbit/login', misc.fitbitLogin, name="fitbit-login"),
     url(r'^fitbit/fetch', misc.fitbitFetch, name="fitbit-fetch"),
 

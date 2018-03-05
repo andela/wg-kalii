@@ -3,6 +3,7 @@ import urllib
 import base64
 import os
 
+
 class FitBit:
     """Class to handle all fitbit operation"""
     # App settings from fitbit as regards the app
@@ -29,13 +30,10 @@ class FitBit:
         # construct and return authorization_uri
         return self.AUTHORIZE_URI + '?' + urlparams
     
-    
     def RequestAccessToken(self, code):
         """Generates url for fit bit authorization """
         # Authentication header
         client_id = self.CLIENT_ID.encode('utf-8')
-        # secret = self.CLIENT_SECRET.encode('utf-8')
-        import pdb; pdb.set_trace()
         headers = {
             'Authorization': os.environ.get('Authorization'),
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -53,7 +51,6 @@ class FitBit:
             self.TOKEN_REQUEST_URI,
             data=params,
             headers=headers)
-
         
         if response.status_code != 200:
             raise Exception("Action unsuccessful " + str(response.status_code))

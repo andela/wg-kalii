@@ -164,8 +164,10 @@ def fitbitFetch(request):
             try:
                 weight_entry.save()    
             except Exception as e:
+                print(e)
                 pass
     except Exception as e:
+        print(e)
         pass
     return HttpResponseRedirect(reverse('core:dashboard'))
 
