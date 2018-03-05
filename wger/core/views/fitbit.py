@@ -3,7 +3,6 @@ import urllib
 import base64
 import os
 
-
 class FitBit:
     """Class to handle all fitbit operation"""
     # App settings from fitbit as regards the app
@@ -29,7 +28,8 @@ class FitBit:
         urlparams = urllib.parse.urlencode(params)
         # construct and return authorization_uri
         return self.AUTHORIZE_URI + '?' + urlparams
-    
+
+
     def RequestAccessToken(self, code):
         """Generates url for fit bit authorization """
         # Authentication header
