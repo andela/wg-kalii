@@ -599,6 +599,18 @@ class WorkoutCacheTestCase(WorkoutManagerTestCase):
             self.assertFalse(
                 cache.get(cache_mapper.get_workout_canonical(workout_id)))
 
+    def test_exercise_language_filter_works(self):
+        """
+        Test exercise filter changes language on toggle
+        """
+        self.user_login()
+        response = self.client.get(
+            reverse('exercise:exercise:overview'), {'filter_by': 'en'})
+        self.assertEqual(5, len(response.context['exercises']))
+        response = self.client.get(
+            reverse('exercise:exercise:overview'), {'filter_by': 'de'})
+        self.assertEqual(4, len(response.context['exercises']))
+
 
 # TODO: fix test, all registered users can upload exercises
 # class ExerciseApiTestCase(api_base_test.ApiBaseResourceTestCase):
