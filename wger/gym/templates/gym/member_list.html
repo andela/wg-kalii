@@ -19,15 +19,16 @@ Inline css for the tab functionality
 {% block content %}
 {% if perms.gym.manage_gym or perms.gym.gym_trainer %}
 <div class="tab">
-    <a href="#" class="btn btn-info" role="button" onclick="openCity(event, 'All')">All</a>
-    <a href="#" class="btn btn-info" role="button" onclick="openCity(event, 'Active')">Active</a>
-    <a href="#" class="btn btn-info" role="button" onclick="openCity(event, 'Inactive')">Inactive</a>
+    <a class="btn btn-info" role="button" onclick="openCity(event, 'All')">All</a>
+    <a class="btn btn-info" role="button" onclick="openCity(event, 'Active')">Active</a>
+    <a class="btn btn-info" role="button" onclick="openCity(event, 'Inactive')">Inactive</a>
 </div>
 
 <div id="All" class="tabcontent">
-    
-    <h3>All gym members</h3> <span onclick="this.parentElement.style.display='none'">x</span> 
+    <h3>All gym members</h3> <span onclick="this.parentElement.style.display='none' "
+    class="topright">x</span> 
     {% include 'gym/partial_user_list.html' %}
+    <br/>
 </div>
 
 <div id="Active" class="tabcontent">
@@ -51,6 +52,7 @@ Inline css for the tab functionality
     <th style="width: 40%;">{% trans "Username" %}</th>
     <th>{% trans "Name" %}</th>
     {% if perms.gym.manage_gym or perms.gym.manage_gyms %}
+        <th>{% trans "Action" %}</th>
         <th style="text-align: right;">{% trans "Roles" %}</th>
     {% endif %}
 </tr>
@@ -79,7 +81,15 @@ Inline css for the tab functionality
     <td>
         {{current_user.obj.get_full_name}}
     </td>
-
+     {% if perms.gym.manage_gym or perms.gym.manage_gyms %}
+        <td>
+            {% if current_user.obj.id != user.id %} {% if current_user.obj.is_active and current_user.perms.gym_trainer %}
+            <a href="{% url 'core:user:deactivate' current_user.obj.pk %}">DEACTIVATE</a>
+            {% else %}
+            <a href="{% url 'core:user:delete' current_user.obj.pk %}">DELETE</a>
+            {% endif %} {% endif %}
+        </td>
+    {% endif %}
     {% if perms.gym.manage_gym or perms.gym.manage_gyms %}
     <td style="text-align: right;">
         <a href="{% url 'gym:gym:edit-user-permission' current_user.obj.pk %}" class="btn btn-default btn-xs wger-modal-dialog">
@@ -348,22 +358,22 @@ Inline css for the tab functionality
     </a>
 {% endif %}
 <script>
-function openCity(evt, cityName) {
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
+    function openCity(evt, cityName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
     }
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-    document.getElementById(cityName).style.display = "block";
-    evt.currentTarget.className += " active";
-}
 
-// Get the element with id="defaultOpen" and click on it
-document.getElementById("defaultOpen").click();
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
 </script>
 
 {% endblock %}

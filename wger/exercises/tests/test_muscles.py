@@ -20,8 +20,8 @@ from wger.core.tests.base_testcase import (
     WorkoutManagerTestCase, WorkoutManagerDeleteTestCase,
     WorkoutManagerEditTestCase, WorkoutManagerAddTestCase,
     WorkoutManagerAccessTestCase)
-from wger.exercises.models import Muscle
-from wger.utils.cache import get_template_cache_name
+from wger.exercises.models import Exercise, Muscle
+from wger.utils.cache import get_template_cache_name, cache_mapper
 
 
 class MuscleRepresentationTestCase(WorkoutManagerTestCase):
@@ -135,3 +135,19 @@ class MuscleApiTestCase(api_base_test.ApiBaseResourceTestCase):
     resource = Muscle
     private_resource = False
     data = {'name': 'The name', 'is_front': True}
+
+
+class MuscleResetCacheTestCase(WorkoutManagerTestCase):
+    """
+    Muscle reset cache test case
+    """
+
+    def test_cache_reset(self):
+        """
+        Test the muscle cache is reset correctly when a muscle is deleted
+        """
+
+        self.client.get(reverse('exercise:exercise:view', kwargs={'id': 2}))
+        self.assertTrue(cache.get(cache_mapper.get_exercise_muscle_bg_key(2)))
+        Exercise.objects.get(pk=2).muscles.all()[0].delete()
+        self.assertFalse(cache.get(cache_mapper.get_exercise_muscle_bg_key(2)))

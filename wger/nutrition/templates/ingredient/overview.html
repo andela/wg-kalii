@@ -70,6 +70,20 @@
                placeholder="{% trans 'ingredient name' %}"
                style="width:100%;">
     </form>
+<br>
+    <div>
+        <span style="margin-right: 3px;">Filter for   </span>
+          <select id="dynamic-select">
+                {% for short_name, long_name in languages %}
+                {% if filter_by == short_name %}
+                <option value="{% url 'nutrition:ingredient:list' %}?filter_by={{ short_name }}" selected>{{ long_name }}</option>
+                {% else %}
+                <option value="{% url 'nutrition:ingredient:list' %}?filter_by={{ short_name }}">{{ long_name }}</option>
+                {% endif %}
+                {% endfor %}
+              </select>
+        <span style="margin-left: 3px;">Ingredients</span>
+    </div>
 {% endblock %}
 
 

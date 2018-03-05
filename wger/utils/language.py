@@ -83,7 +83,7 @@ def load_item_languages(item, language_code=None):
     return languages
 
 
-def load_ingredient_languages(request):
+def load_ingredient_languages(request, filter_ingredients=None):
     """
     Filter the ingredients the user will see by its language.
 
@@ -96,7 +96,10 @@ def load_ingredient_languages(request):
     """
 
     language = load_language()
-    languages = load_item_languages(LanguageConfig.SHOW_ITEM_INGREDIENTS)
+    if not filter_ingredients:
+        languages = load_item_languages(LanguageConfig.SHOW_ITEM_INGREDIENTS)
+    else:
+        languages = list([Language.objects.get(pk=filter_ingredients)])
 
     # Only registered users have a profile
     if request.user.is_authenticated():
@@ -107,5 +110,20 @@ def load_ingredient_languages(request):
         # english to the list
         if show_english and language.short_name != 'en':
             languages = list(set(languages + [Language.objects.get(pk=2)]))
+
+    return languages
+
+
+def load_exercise_languages(filter_exercises=None):
+    """
+    :param filter_exercises: Language Primary Key
+    :return: Filtered languages if requested else current language
+    """
+
+    if not filter_exercises:
+        languages = load_item_languages(LanguageConfig.SHOW_ITEM_EXERCISES)
+
+    else:
+        languages = list([Language.objects.get(pk=filter_exercises)])
 
     return languages
