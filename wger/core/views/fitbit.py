@@ -15,7 +15,7 @@ class FitBit:
     AUTHORIZE_URI = os.getenv('AUTHORIZE_URI')
     TOKEN_REQUEST_URI = os.getenv("TOKEN_REQUEST_URI")
 
-    def ComposeAuthorizationuri(self):
+    def ComposeAuthorizationUri(self):
         """Creates a unique  url for authorization for each user
         """
         # parameters for authorization
@@ -65,8 +65,6 @@ class FitBit:
     def RefreshToken(self, token):
         """ Refresh expired access token """
         # authentication header
-        # client_id = self.CLIENT_ID.encode('utf-8')
-        # secret = self.CLIENT_SECRET.encode('utf-8')
         headers = {
             'Authorization': os.environ.get('Authorization'),
             'Content-Type': 'application/x-www-form-urlencoded'

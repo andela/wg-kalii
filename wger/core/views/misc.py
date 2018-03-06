@@ -146,7 +146,7 @@ def dashboard(request):
 @login_required
 def fitbitLogin(request):
     fitbit = FitBit()
-    login_url = fitbit.ComposeAuthorizationuri()
+    login_url = fitbit.ComposeAuthorizationUri()
     return redirect(login_url)
 
 
@@ -166,9 +166,9 @@ def fitbitFetch(request):
             try:
                 weight_entry.save()
             except Exception as e:
-                pass
+                print(e)
     except Exception as e:
-        pass
+        print(e)
     return HttpResponseRedirect(reverse('core:dashboard'))
 
 
