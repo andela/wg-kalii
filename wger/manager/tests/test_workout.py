@@ -14,7 +14,6 @@
 
 import datetime
 import os
-import requests
 
 from django.core.urlresolvers import reverse
 
@@ -152,15 +151,15 @@ class AddWorkoutTestCase(WorkoutManagerTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'workout/overview.html')
         self.assertContains(response, 'form action=')
-        
+
         filename = os.path.join(
             os.path.dirname(__file__),
             os.path.pardir,
             'test_file',
             'tests.csv')
 
-        files = {'csv_file': open(filename,'rb')}
-        respose = self.client.post('/en/workout/import/', files)
+        files = {'csv_file': open(filename, 'rb')}
+        response = self.client.post('/en/workout/import/', files, follow=True)
         self.assertEqual(response.status_code, 200)
 
 
