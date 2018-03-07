@@ -132,10 +132,6 @@ class AddWorkoutTestCase(WorkoutManagerTestCase):
         self.create_workout()
         response = self.client.get('/en/workout/1/export/')
         self.assertEqual(response.status_code, 200)
-
-        data = {
-            'file_format': '0',
-            }
         response = self.client.post('/en/workout/1/export/', data)
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response.has_header("Content-Disposition"))
