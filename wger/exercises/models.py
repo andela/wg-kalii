@@ -188,8 +188,7 @@ class Exercise(AbstractSubmissionModel, AbstractLicenseModel, models.Model):
     objects = SubmissionManager()
     """Custom manager"""
 
-    author = models.ForeignKey(User, null=True,
-                               on_delete=models.CASCADE, verbose_name=_('Author'))
+    author = models.ForeignKey(User, null=True, on_delete=models.CASCADE, verbose_name=_('Author'))
     category = models.ForeignKey(ExerciseCategory, verbose_name=_('Category'))
     description = models.TextField(
         max_length=2000,
