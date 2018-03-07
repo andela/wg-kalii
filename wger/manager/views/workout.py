@@ -454,7 +454,6 @@ def export_workouts(request, pk):
 
 @login_required
 def import_workouts(request):
-
     if request.POST and request.FILES:
         csvfile = TextIOWrapper(
             request.FILES['csv_file'].file,
