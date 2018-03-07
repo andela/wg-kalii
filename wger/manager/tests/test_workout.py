@@ -142,6 +142,27 @@ class AddWorkoutTestCase(WorkoutManagerTestCase):
         self.assertTrue(response.has_header("Content-Disposition"))
         self.assertEqual(response['Content-Type'], 'text/csv')
 
+    def test_import(self):
+        """
+        Test importing csv file
+        """
+        self.user_login()
+        response = self.client.get(
+            reverse('manager:workout:import_workouts'), follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'workout/overview.html')
+        self.assertContains(response, 'form action=')
+        
+        filename = os.path.join(
+            os.path.dirname(__file__),
+            os.path.pardir,
+            'test_file',
+            'tests.csv')
+
+        files = {'csv_file': open(filename,'rb')}
+        respose = self.client.post('/en/workout/import/', files)
+        self.assertEqual(response.status_code, 200)
+
 
 class DeleteTestWorkoutTestCase(WorkoutManagerDeleteTestCase):
     """
