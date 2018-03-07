@@ -176,7 +176,6 @@ def add(request, pk):
                 instance.workout = day.training
                 instance.date = log_date
                 instance.save()
-
             return HttpResponseRedirect(
                 reverse('manager:log:log', kwargs={'pk': day.training_id}))
     else:
