@@ -146,7 +146,7 @@ def dashboard(request):
 @login_required
 def fitbitLogin(request):
     fitbit = FitBit()
-    login_url = fitbit.ComposeAuthorizationUri()
+    login_url = fitbit.compose_authorization_uri()
     return redirect(login_url)
 
 
@@ -154,9 +154,9 @@ def fitbitLogin(request):
 def fitbitFetch(request):
     code = request.GET.get('code')
     fitbit = FitBit()
-    token = fitbit.RequestAccessToken(code)
+    token = fitbit.request_access_token(code)
     try:
-        data = fitbit.GetWeight(token)
+        data = fitbit.get_weight(token)
         for weight in data['weight']:
 
             weight_entry = WeightEntry()

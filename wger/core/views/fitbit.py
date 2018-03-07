@@ -7,15 +7,15 @@ import os
 class FitBit:
     """Class to handle all fitbit operation"""
     # App settings from fitbit as regards the app
-    CLIENT_ID = os.getenv('CLIENT_ID')
-    CLIENT_SECRET = os.getenv('CLIENT_SECRET')
-    SCOPE = os.getenv('SCOPE')
-    REDIRECT_URI = os.getenv('REDIRECT_URI')
+    CLIENT_ID = os.getenv('CLIENT_ID', 'DEFAULT_VALUE') 
+    CLIENT_SECRET = os.getenv('CLIENT_SECRET', 'DEFAULT_VALUE')
+    SCOPE = os.getenv('SCOPE', 'DEFAULT_VALUE')
+    REDIRECT_URI = os.getenv('REDIRECT_URI', 'DEFAULT_VALUE')
     # Authorization and authentication URIs
-    AUTHORIZE_URI = os.getenv('AUTHORIZE_URI')
-    TOKEN_REQUEST_URI = os.getenv("TOKEN_REQUEST_URI")
+    AUTHORIZE_URI = os.getenv('AUTHORIZE_URI', 'DEFAULT_VALUE')
+    TOKEN_REQUEST_URI = os.getenv("TOKEN_REQUEST_URI", 'DEFAULT_VALUE')
 
-    def ComposeAuthorizationUri(self):
+    def compose_authorization_uri(self):
         """Creates a unique  url for authorization for each user
         """
         # parameters for authorization
@@ -30,7 +30,7 @@ class FitBit:
         # construct and return authorization_uri
         return self.AUTHORIZE_URI + '?' + urlparams
 
-    def RequestAccessToken(self, code):
+    def request_access_token(self, code):
         """Generates url for fit bit authorization """
         # Authentication header
         client_id = self.CLIENT_ID.encode('utf-8')
@@ -62,7 +62,7 @@ class FitBit:
 
         return token
 
-    def RefreshToken(self, token):
+    def refresh_token(self, token):
         """ Refresh expired access token """
         # authentication header
         headers = {
@@ -83,7 +83,7 @@ class FitBit:
         token['refresh_token'] = response.refresh_token
         return token
 
-    def GetWeight(self, token):
+    def get_weight(self, token):
         """Method makes call to API"""
         headers = {
             'Authorization': 'Bearer ' + token['access_token']
@@ -94,8 +94,8 @@ class FitBit:
             return response.json()
 
         elif response.status_code == 403:
-            token = self.RefreshToken(token)
-            self.GetWeight(token)
+            token = self.refresh_token(token)
+            self.get_weight(token)
 
         else:
             raise Exception("Action unsuccessful")
