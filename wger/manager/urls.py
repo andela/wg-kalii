@@ -81,6 +81,7 @@ patterns_workout = [
     url(r'^(?P<id>\d+)/pdf/table$', pdf.workout_view, name='pdf-table'),
     url(r'^(?P<day_pk>\d+)/timer$', workout.timer, name='timer'),
     url(r'^(?P<pk>\d+)/export/$', workout.export_workouts, name='export_workouts'),
+    url(r'^import$', workout.import_workouts, name='import_workouts'),
 ]
 
 # sub patterns for workout sessions
