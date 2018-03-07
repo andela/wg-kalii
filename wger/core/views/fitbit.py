@@ -7,7 +7,7 @@ import os
 class FitBit:
     """Class to handle all fitbit operation"""
     # App settings from fitbit as regards the app
-    CLIENT_ID = os.getenv('CLIENT_ID', 'DEFAULT_VALUE') 
+    CLIENT_ID = os.getenv('CLIENT_ID', 'DEFAULT_VALUE')
     CLIENT_SECRET = os.getenv('CLIENT_SECRET', 'DEFAULT_VALUE')
     SCOPE = os.getenv('SCOPE', 'DEFAULT_VALUE')
     REDIRECT_URI = os.getenv('REDIRECT_URI', 'DEFAULT_VALUE')
