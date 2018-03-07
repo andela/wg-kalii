@@ -17,16 +17,14 @@
 import logging
 import uuid
 import datetime
-import os
 import csv
-import json
 
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.template.context_processors import csrf
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.utils.translation import ugettext_lazy, ugettext as _
-from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.views.generic import DeleteView, UpdateView
 
@@ -37,7 +35,6 @@ from wger.manager.forms import (WorkoutForm, WorkoutSessionHiddenFieldsForm,
                                 WorkoutCopyForm)
 from wger.utils.generic_views import (WgerFormMixin, WgerDeleteMixin)
 from wger.utils.helpers import make_token
-from django.utils.encoding import smart_str
 from django.http.response import HttpResponse
 
 logger = logging.getLogger(__name__)
@@ -418,11 +415,12 @@ def timer(request, day_pk):
 @login_required
 def export_workouts(request, pk):
     '''
-    exports user's workouts 
+    exports user's workouts
     '''
     workouts = Workout.objects.filter(user=request.user, id=pk)
     response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename='+str(request.user)+'_workouts.csv'
+    response['Content-Disposition'] = 'attachment; \
+        filename='+str(request.user)+'_workouts.csv'
     writer = csv.writer(response)
     writer.writerow(['Date created',
                      'Comment',
