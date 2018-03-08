@@ -24,8 +24,15 @@ from django.http import (HttpResponse, HttpResponseForbidden,
 from django.template.context_processors import csrf
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib.auth.decorators import login_required
+from django.db.models import Min
+from django.db.models import Max
+from django.db.models import Q
+from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy, ugettext as _
 from django.views.generic import DeleteView, UpdateView
+
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
 
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4, cm
@@ -421,3 +428,75 @@ def export_pdf(request, id, uidb64=None, token=None):
         'Content-Disposition'] = 'attachment; filename=nutritional-plan.pdf'
     response['Content-Length'] = len(response.content)
     return response
+
+
+@login_required
+def comparison(request):
+    """
+    Shows a comparison of nutrition plan with another selected user
+    """
+
+    users = list(User.objects.filter(~Q(username=request.user.username), \
+            Q(nutritionplan__id__isnull=False)).distinct())
+
+    template_data = {}
+
+    min_date = NutritionPlan.objects.filter(user=request.user).\
+        aggregate(Min('creation_date'))['creation_date__min']
+    max_date = NutritionPlan.objects.filter(user=request.user).\
+        aggregate(Max('creation_date'))['creation_date__max']
+    if min_date:
+        template_data['min_date'] = 'new Date(%(year)s, %(month)s, %(day)s)' % \
+                                    {'year': min_date.year,
+                                     'month': min_date.month,
+                                     'day': min_date.day}
+    if max_date:
+        template_data['max_date'] = 'new Date(%(year)s, %(month)s, %(day)s)' % \
+                                    {'year': max_date.year,
+                                     'month': max_date.month,
+                                     'day': max_date.day}
+
+    template_data['users'] = users
+    return render(request, 'plan/comparison.html', template_data)
+
+
+@api_view(['GET'])
+def get_nutrition_data(request):
+    """
+    Process the data to pass it to the JS libraries to generate an SVG image
+    """
+
+    date_min = request.GET.get('date_min', False)
+    date_max = request.GET.get('date_max', True)
+
+    if date_min and date_max:
+        plans = NutritionPlan.objects.filter(
+            user=user, date__range=(date_min, date_max))
+    else:
+        plans = NutritionPlan.objects.filter(user=request.user)
+
+    chart_data = []
+
+    for i in plans:
+        chart_data.append({'date': i.creation_date, 'plan': round(i.get_nutritional_values()['total']['energy'], 0)})
+
+    # Return the results to the client
+    return Response(chart_data)
+
+
+@api_view(['GET'])
+def get_comparison_nutrition_data(request, username=None):
+    """
+    Process the data to pass it to the JS libraries to generate an SVG image
+    """
+
+    user = User.objects.filter(username=username)
+    plans = NutritionPlan.objects.filter(user=user)
+
+    chart_data = []
+
+    for i in plans:
+        chart_data.append({'date': i.creation_date, 'plan': round(i.get_nutritional_values()['total']['energy'], 0)})
+
+    # Return the results to the client
+    return Response(chart_data)
