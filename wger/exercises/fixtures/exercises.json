@@ -7582,6 +7582,78 @@
         "model": "exercises.exercise"
     },
     {
+        "pk": 387,
+        "fields": {
+            "license_author": "richmr2174@gmail.com",
+            "status": "2",
+            "language": 2,
+            "muscles_secondary": [
+                2
+            ],
+            "description": "<ol><li>Locate a flat bench and place a dumbbell to the long side of it (a little closer than midway to where the upper body will be).</li><li>Lie on the bench with one side of the body down (if you're working the right shoulder, your left side will be on the bench; reverse for working the right side).</li><li>Grab the dumbbell and lift it slightly off the floor with the hand of the shoulder being used.</li><li>Keeping a slight bend at the elbow, lift the dumbbell up in an arcing motion (meaning up and away from the body, once it reaches midway, it will begin arcing up and towards the body).  Inhale throughout this motion.</li><li>Lift the dumbbell until the arm becomes perpendicular to the ground.</li><li>Lower the dumbbell back down to the starting point. Do not let the dumbbell hit the floor and remember to exhale during this motion.</li><li>Switch sides and repeat steps 4-6.</li></ol>",
+            "equipment": [
+                1
+            ],
+            "creation_date": "2018-02-26",
+            "category": 13,
+            "uuid": "76964888-192c-4e93-b24c-914ea542002b",
+            "muscles": [
+                17
+            ],
+            "license": 2,
+            "name": "Lying side laterals"
+        },
+        "model": "exercises.exercise"
+    },
+    {
+        "pk": 388,
+        "fields": {
+            "license_author": "richmr2174@gmail.com",
+            "status": "2",
+            "language": 2,
+            "muscles_secondary": [
+                
+            ],
+            "description": "<ol><li>Stand with feet about shoulder width apart and dumbbells in hand.</li><li>Bend at the waist (without rounding the back) allowing arms to hang.</li><li>Keeping a slight bend in the elbows, raise the arms to horizontal, and exhale throughout the movement. To put additional focus on the lower and middle trapezius and outer back, briefly squeeze the shoulder blades together at the end of the movement.</li><li>Lower the weights to the starting position, inhaling throughout the movement.</li><li>Repeat steps 3-4.</li></ol>",
+            "equipment": [
+                1
+            ],
+            "creation_date": "2018-02-26",
+            "category": 13,
+            "uuid": "76964888-192c-4e93-b24c-914ea548902b",
+            "muscles": [
+                19
+            ],
+            "license": 2,
+            "name": "Bent-Over Lateral Raises"
+        },
+        "model": "exercises.exercise"
+    },
+    {
+        "pk": 389,
+        "fields": {
+            "license_author": "richmr2174@gmail.com",
+            "status": "2",
+            "language": 2,
+            "muscles_secondary": [
+                
+            ],
+            "description": "<ol><li>Grab a dumbbell (using an overhand grip) securely in each hand and bring them up to the sides</li><li>Raise the dumbbells to a point where the forearms are parallel to the ground and the elbows form a 90 degree angle</li><li>While holding this arm position, rotate the wrists away from the body so the palms are facing up (inhale throughout this motion)</li><li>Slowly rotate the wrists toward the body until the palms face down (exhale throughout this motion)</li><li>Repeat steps 2-4</li></ol>",
+            "equipment": [
+                1
+            ],
+            "creation_date": "2018-02-26",
+            "category": 13,
+            "uuid": "76964888-192c-4e93-b24c-914ea545102b",
+            "muscles": [
+                20
+            ],
+            "license": 2,
+            "name": "Wrist Rotations"
+        },
+        "model": "exercises.exercise"
+    },
+    {
         "pk": 6,
         "fields": {
             "exercise": 33,
