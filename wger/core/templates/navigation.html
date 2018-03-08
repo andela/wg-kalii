@@ -85,6 +85,8 @@
                             <ul class="dropdown-menu">
                                 <li><a href="{% url 'weight:overview' user.username %}" rel="nofollow">{% trans "Weight overview" %}</a></li>
                                 <li><a href="{% url 'weight:add' %}" rel="nofollow">{% trans "Add weight entry" %}</a></li>
+                                <li class="divider"></li>
+                                <li><a href="{% url 'weight:comparison' user.username %}" rel="nofollow">{% trans "Weight comparison" %}</a></li>
                             </ul>
                         </li>
                         {% endif %}
@@ -104,6 +106,7 @@
                             <li><a href="{% url 'nutrition:ingredient:list' %}">{% trans "Ingredient overview" %}</a></li>
                             <li><a href="{% url 'nutrition:bmi:view' %}" rel="nofollow">{% trans "BMI calculator" %}</a></li>
                             <li><a href="{% url 'nutrition:calories:view' %}" rel="nofollow">{% trans "Daily calories calculator" %}</a></li>
+                            <li><a href="{% url 'nutrition:plan:comparison' %}" rel="nofollow">{% trans "Nutrition comparison" %}</a></li>
                             {% if perms.nutrition %}
                                 <li class="divider"></li>
                                 <li class="dropdown-header">{% trans "Administration" %}</li>
