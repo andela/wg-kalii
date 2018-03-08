@@ -35,7 +35,16 @@ function wgerCustomPageInit()
 
     {% csrf_token %}
     {% render_form_field form.exercises %}
-    <div class="form-group">
+    <div class="form-group drop-set">
+        <label class="col-md3 control-label">
+            {% trans "Drop set" %}
+        </label>
+        <div class=" col-md-9">
+            <input class="" type="checkbox" id="drop-set-checkbox" name="drop_set">
+            <span class="help-block">{% blocktrans %} A dropset is a training technique where you perform an exercise until failure then reduce/ drop the weight and continue with more reps with less weight. {% endblocktrans %}</span>
+        </div>
+    </div>
+    <div class="form-group" id="set-slider">
         <label for="id_sets" class="control-label col-md-3">
             {{form.sets.label}}:
             <span id="id_sets_value">{{ form.sets.value }}</span>
@@ -52,7 +61,7 @@ function wgerCustomPageInit()
     </div>
 
 
-    <div class="form-group">
+    <div class="form-group" id="repetitions">
         <label class="col-md-3 control-label">
             {% trans "Repetitions" %}
         </label>

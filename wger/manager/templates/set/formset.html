@@ -1,124 +1,64 @@
-{% load wger_extras %}
-{% load i18n %}
-
-<div class="row">
-        <div class="form-group">
-            <label class="col-md-3 control-label">
-                Drop sets
-            </label>
-        
-            <div class="col-md-9">
-                <span class="help-block">
-                    To do drop sets please add your starting weight and the number of repetitions (reps)
-                </span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-3 control-label">
-            </label>
-            <div class="col-md-9">
-                <div class="col-xs-3 " id="col-xs-3">
-                    <input type="number" id="input-1"  
-                    class="form-control" placeholder="Reps">
-                </div>
-                <div class="col-xs-4 " id="col-xs-4">
-                        <input type="number" id="input-2"  
-                        class="form-control" placeholder="Weight">
-                </div>
-
-                <a class="btn btn-primary" onclick="dropSets()">Calculate Drop sets</a>
-            </div>
-        </div>
-</div>
+{% load wger_extras %} {% load i18n %}
 
 <div id="formset-exercise-{{exercise.id}}" style="margin-top: 1em;">
-<div class="row">
-    <div class="col-md-offset-2 col-md-10">
-        <label class="control-label">
-            {{exercise}}
-        </label>
-    </div>
-</div>
-{{ formset.management_form }}
-
-
-{% for field in formset %}
-<div style="padding-top: 0.5em;">
-    {# Header row with field labels, only for first loop #}
     <div class="row">
-        {% for i in field %}
-        
-        {% if not i.is_hidden %}
-            {% if forloop.first %}
+        <div class="col-md-offset-2 col-md-10">
+            <label class="exercise-label control-label">
+                {{exercise}}
+            </label>
+        </div>
+    </div>
+    {{ formset.management_form }} {% for field in formset %}
+    <div style="padding-top: 0.5em;">
+        {# Header row with field labels, only for first loop #}
+        <div class="row">
+            {% for i in field %} {% if not i.is_hidden %} {% if forloop.first %}
             <div class="col-xs-2">
             </div>
-            {% endif %}
-            {% if forloop.parentloop.first %}
-                <div class="{% cycle 'col-xs-3' 'col-xs-2' %}">
-                    {{ i.label }}
-                    
-                    {% if not i.field.required %}
-                        <br>
-                        <span style="font-size:90%;">— <em>{% trans "Optional" %}</em></span>
-                        
-                    {% endif %}
-                </div>
-            {% endif %}
-        {% endif %}
-        {% endfor %}
-    </div>
+            {% endif %} {% if forloop.parentloop.first %}
+            <div class="form=header-{{ i.name }} {% cycle 'col-xs-3' 'col-xs-2' %}">
+                {{ i.label }} {% if not i.field.required %}
+                <br>
+                <span style="font-size:90%;">—
+                    <em>{% trans "Optional" %}</em>
+                </span>
 
-    {# Form field rows #}
-    <div class="row">
-            
-        {% for i in field %}
-            {% if forloop.first %}
-            <div class="col-xs-2" style="text-align: right; padding-left: 0px;">
+                {% endif %}
+            </div>
+            {% endif %} {% endif %} {% endfor %}
+        </div>
+
+        {# Form field rows #}
+        <div class="row">
+
+            {% for i in field %} {% if forloop.first %}
+            <div class="numbering col-xs-2" style="text-align: right; padding-left: 0px;">
                 {% trans "Nr." %} {{ forloop.parentloop.counter }}
             </div>
-            {% endif %}
-            
-
-            {% if not i.is_hidden %}
-            <div class="{% cycle 'col-xs-3' 'col-xs-2' %} {% if i.errors %}has-error{% endif %}" style="padding-left: 0px;">
-            {% endif %}
-
-            {#  Field elements #}
-            {% if i|is_checkbox %}
-                {{ i|form_field_add_css:'checkbox' }}
-            {% else %}
-                {{i|form_field_add_css:'form-control'}}
-            {% endif %}
-
-            {% for error in i.errors %}
-                <div {% if i.errors %}class="has-error has-feedback"{% endif %}>
-                <span class="help-block">
-                    <p>{% trans error %}</p>
-                </span>
+            {% endif %} {% if not i.is_hidden %}
+            <div class="field-{{i.name}} {% cycle 'col-xs-3' 'col-xs-2' %} {% if i.errors %}has-error{% endif %}" style="padding-left: 0px;">
+                {% endif %} 
+                {# Field elements #} 
+                {% if i|is_checkbox %} 
+                    {{ i|form_field_add_css:'checkbox' }} 
+                {% else %} 
+                    {% if i.name == 'repetition_unit' %}
+                        {{i|form_field_add_css:'form-control main'}}
+                        {{i|form_field_add_css:'form-control hidden dummy'}}
+                    {% else %}
+                        {{i|form_field_add_css:'form-control'}}
+                    {% endif %}
+                
+                {% endif %} {% for error in i.errors %}
+                <div {% if i.errors %}class="has-error has-feedback" {% endif %}>
+                    <span class="help-block">
+                        <p>{% trans error %}</p>
+                    </span>
                 </div>
-            {% endfor %}
-
-            {% if not i.is_hidden %}
+                {% endfor %} {% if not i.is_hidden %}
             </div>
-            {% endif %}
-        {% endfor %}
+            {% endif %} {% endfor %}
+        </div>
     </div>
+    {% endfor %}
 </div>
-{% endfor %}
-</div>
-<script>
-    var reps = document.getElementById('input-1');
-    var weight = document.getElementById('input-2');
-    var id_sets = document.getElementById('id_sets');
-    var ids = document.querySelectorAll('input.form-control')[4].id;
-    var exerciseNo = ids.replace(/^\D+|\D.*$/g, '');
-    function dropSets(){
-        for (var i =0; i < id_sets.value; i++) {
-            var repBox = 'id_exercise'+exerciseNo+'-'+i+'-reps';
-            var weightBox = 'id_exercise'+exerciseNo+'-'+i+'-weight';
-            var space = document.getElementById(repBox);
-            var space2 = document.getElementById(weightBox);
-            var editedReps = parseInt(repbase);
-        }
-    }
-</script>

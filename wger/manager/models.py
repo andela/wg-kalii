@@ -584,7 +584,7 @@ class Set(models.Model):
                     MaxValueValidator(MAX_SETS)],
         verbose_name=_('Number of sets'),
         default=DEFAULT_SETS)
-
+    drop_set = models.BooleanField(default=False, verbose_name=_('Drop set'))
     # Metaclass to set some other properties
     class Meta:
         ordering = [
