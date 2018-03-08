@@ -408,6 +408,21 @@ function addExercise(exercise) {
   $exerciseSearchLog.trigger('create');
 }
 
+function disableRepsUnitsInput() {
+  var checked = $('#drop-set-checkbox').prop('checked');
+  $('.field-reps input').val(0).parent().toggle();
+  $('.form-header-reps').toggle();
+  $('.field-repetition_unit').toggleClass('drop-set-reflow').children().val(2);
+  $('.field-repitition_unit select.main').prop('disabled', checked);
+  $('.form-helper-repetition_unit').toggleClass('drop-set-reflow');
+  $('numbering').toggleClass('drop-set-reflow');
+}
+// when drop sets are enabled, calls function below and deletes set rows
+$(document).on('change', "input[name='drop_set']", function () {
+  disableRepsUnitsInput();
+  $('#repetitions').toggle();
+});
+
 function getExerciseFormset(exerciseId) {
   var formsetUrl;
   var setValue;
@@ -423,9 +438,17 @@ function getExerciseFormset(exerciseId) {
       $formsets.append(data);
       $('#exercise-search-log').scrollTop(0);
       $formsets.trigger('create');
+      if ($('#drop-set-checkbox').is(':checked')) {
+        disableRepsUnitsInput();
+        $('#repetitions').hide();
+      } else {
+        $('#repetitions').show();
+      }
     });
   }
 }
+
+// function to disable and hide reps number input and set units as when until failure is added
 
 /*
  Updates all exercise formsets, e.g. when the number of sets changed
@@ -452,6 +475,12 @@ function updateAllExerciseFormset() {
             $formsets.append(data);
             $('#exercise-search-log').scrollTop(0);
             $formsets.trigger('create');
+            if ($('#drop-set-checkboc=x').is('checked')) {
+              disableRepsUnitsInput();
+              $('#repetitions').hide();
+            } else {
+              $('#repetitions').show();
+            }
           }).promise();
         });
       }

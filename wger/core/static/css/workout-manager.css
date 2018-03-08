@@ -33,6 +33,30 @@
     background-color: #FFF;
 }
 
+#drop-set-checkbox {
+    margin-top: 12px;
+}
+
+.drop-set {
+    margin-top: -15px;
+}
+
+.drop-set-reflow.field-repetition_unit {
+    margin-left: 15px;
+}
+
+.drop-set-reflow.form-header-repetition_unit{
+    margin-left: 75px;
+}
+
+.drop-set-reflow.numbering {
+    margin-left: 50px;
+}
+
+.exercise-label{
+    margin-left: 150px;
+}
+
 
 /*
  * Images in links are vertically aligned
