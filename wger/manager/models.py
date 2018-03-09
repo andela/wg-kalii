@@ -585,6 +585,7 @@ class Set(models.Model):
         default=DEFAULT_SETS)
     drop_set = models.BooleanField(default=False, verbose_name=_('Drop set'))
     # Metaclass to set some other properties
+    
     class Meta:
         ordering = [
             "order",
