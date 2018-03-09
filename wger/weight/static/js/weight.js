@@ -13,7 +13,6 @@
 
  You should have received a copy of the GNU Affero General Public License
  */
-'use strict';
 
 function modifyTimePeriod(data, pastNumberDays) {
   var filtered;
@@ -80,7 +79,6 @@ $(document).ready(function () {
   });
 });
 
-/*eslint no-unused-vars: "error"*/
 function compareUser(username) {
   var url;
   var chartParams;
