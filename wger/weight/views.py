@@ -195,8 +195,8 @@ def comparison(request, username=None):
     """
     is_owner, user = check_access(request.user, username)
 
-    users = list(User.objects.filter(~Q(username=request.user.username),\
-        Q(weightentry__id__isnull=False)).distinct())
+    users = list(User.objects.filter(~Q(username=request.user.username),
+                 Q(weightentry__id__isnull=False)).distinct())
 
     template_data = {}
 

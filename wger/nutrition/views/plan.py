@@ -437,7 +437,7 @@ def comparison(request):
     """
 
     users = list(User.objects.filter(~Q(username=request.user.username),
-            Q(nutritionplan__id__isnull=False)).distinct())
+                 Q(nutritionplan__id__isnull=False)).distinct())
 
     template_data = {}
 
@@ -471,7 +471,7 @@ def get_nutrition_data(request):
 
     if date_min and date_max:
         plans = NutritionPlan.objects.filter(
-            user=user, date__range=(date_min, date_max))
+            user=request.user, date__range=(date_min, date_max))
     else:
         plans = NutritionPlan.objects.filter(user=request.user)
 
