@@ -75,6 +75,8 @@ $(document).ready(function () {
       MG.data_graphic(chartParams);
     }
   });
+
+  compareUser("");
 });
 
 function compareUser(username) {

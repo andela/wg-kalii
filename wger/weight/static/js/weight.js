@@ -13,6 +13,7 @@
 
  You should have received a copy of the GNU Affero General Public License
  */
+'use strict';
 
 function modifyTimePeriod(data, pastNumberDays) {
   var filtered;
@@ -77,6 +78,8 @@ $(document).ready(function () {
       MG.data_graphic(chartParams);
     }
   });
+
+  compareUser("");
 });
 
 function compareUser(username) {
