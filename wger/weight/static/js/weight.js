@@ -31,6 +31,53 @@ function modifyTimePeriod(data, pastNumberDays) {
   return data;
 }
 
+function compareUser(username) {
+  var url;
+  var chartParams;
+  var weightChart;
+  weightChart = {};
+  chartParams = {
+    animate_on_load: true,
+    full_width: true,
+    top: 10,
+    left: 30,
+    right: 10,
+    show_secondary_x_label: true,
+    xax_count: 10,
+    target: '#comparison_diagram',
+    x_accessor: 'date',
+    y_accessor: 'weight',
+    min_y_from_data: true,
+    colors: ['#3465a4']
+  };
+
+  url = '/weight/api/get_comparison_weight_data/' + username;
+
+  d3.json(url, function (json) {
+    var data;
+    if (json.length) {
+      data = MG.convert.date(json, 'date');
+      weightChart.data = data;
+
+      // Plot the data
+      chartParams.data = data;
+      MG.data_graphic(chartParams);
+    }
+  });
+
+  $('.modify-time-period-controls button').click(function () {
+    var pastNumberDays = $(this).data('time_period');
+    var data = modifyTimePeriod(weightChart.data, pastNumberDays);
+
+    // change button state
+    $(this).addClass('active').siblings().removeClass('active');
+    if (data.length) {
+      chartParams.data = data;
+      MG.data_graphic(chartParams);
+    }
+  });
+}
+
 $(document).ready(function () {
   var url;
   var username;
@@ -79,52 +126,5 @@ $(document).ready(function () {
     }
   });
 
-  compareUser("");
+  compareUser('');
 });
-
-function compareUser(username) {
-  var url;
-  var chartParams;
-  var weightChart;
-  weightChart = {};
-  chartParams = {
-    animate_on_load: true,
-    full_width: true,
-    top: 10,
-    left: 30,
-    right: 10,
-    show_secondary_x_label: true,
-    xax_count: 10,
-    target: '#comparison_diagram',
-    x_accessor: 'date',
-    y_accessor: 'weight',
-    min_y_from_data: true,
-    colors: ['#3465a4']
-  };
-
-  url = '/weight/api/get_comparison_weight_data/' + username;
-
-  d3.json(url, function (json) {
-    var data;
-    if (json.length) {
-      data = MG.convert.date(json, 'date');
-      weightChart.data = data;
-
-      // Plot the data
-      chartParams.data = data;
-      MG.data_graphic(chartParams);
-    }
-  });
-
-  $('.modify-time-period-controls button').click(function () {
-    var pastNumberDays = $(this).data('time_period');
-    var data = modifyTimePeriod(weightChart.data, pastNumberDays);
-
-    // change button state
-    $(this).addClass('active').siblings().removeClass('active');
-    if (data.length) {
-      chartParams.data = data;
-      MG.data_graphic(chartParams);
-    }
-  });
-}
