@@ -176,9 +176,7 @@ def add(request, pk):
                 instance.workout = day.training
                 instance.date = log_date
                 instance.save()
-
-            return HttpResponseRedirect(
-                reverse('manager:log:log', kwargs={'pk': day.training_id}))
+            return HttpResponseRedirect(reverse('manager:log:log', kwargs={'pk': day.training_id}))
     else:
         # Initialise the formset with a queryset that won't return any objects
         # (we only add new logs here and that seems to be the fastest way)
