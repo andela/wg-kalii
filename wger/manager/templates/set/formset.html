@@ -16,7 +16,7 @@
             <div class="col-xs-2">
             </div>
             {% endif %} {% if forloop.parentloop.first %}
-            <div class="form=header-{{ i.name }} {% cycle 'col-xs-3' 'col-xs-2' %}">
+            <div class="form-header-{{ i.name }} {% cycle 'col-xs-3' 'col-xs-2' %}">
                 {{ i.label }} {% if not i.field.required %}
                 <br>
                 <span style="font-size:90%;">—

@@ -413,9 +413,9 @@ function disableRepsUnitsInput() {
   $('.field-reps input').val(0).parent().toggle();
   $('.form-header-reps').toggle();
   $('.field-repetition_unit').toggleClass('drop-set-reflow').children().val(2);
-  $('.field-repitition_unit select.main').prop('disabled', checked);
-  $('.form-helper-repetition_unit').toggleClass('drop-set-reflow');
-  $('numbering').toggleClass('drop-set-reflow');
+  $('.field-repetition_unit select.main').prop('disabled', checked);
+  $('.form-header-repetition_unit').toggleClass('drop-set-reflow');
+  $('.numbering').toggleClass('drop-set-reflow');
 }
 // when drop sets are enabled, calls function below and deletes set rows
 $(document).on('change', "input[name='drop_set']", function () {
