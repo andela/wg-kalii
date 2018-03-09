@@ -436,7 +436,7 @@ def comparison(request):
     Shows a comparison of nutrition plan with another selected user
     """
 
-    users = list(User.objects.filter(~Q(username=request.user.username), \
+    users = list(User.objects.filter(~Q(username=request.user.username),
             Q(nutritionplan__id__isnull=False)).distinct())
 
     template_data = {}

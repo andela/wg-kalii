@@ -162,6 +162,7 @@ def overview(request, username=None):
     template_data['last_five_weight_entries_details'] = last_weight_entries
     return render(request, 'overview.html', template_data)
 
+
 @api_view(['GET'])
 def get_weight_data(request, username=None):
     """
@@ -187,14 +188,15 @@ def get_weight_data(request, username=None):
     # Return the results to the client
     return Response(chart_data)
 
+
 def comparison(request, username=None):
     """
     Shows a comparison of user's weight with another selected user
     """
     is_owner, user = check_access(request.user, username)
 
-    users = list(User.objects.filter(~Q(username=request.user.username), \
-            Q(weightentry__id__isnull=False)).distinct())
+    users = list(User.objects.filter(~Q(username=request.user.username),\
+        Q(weightentry__id__isnull=False)).distinct())
 
     template_data = {}
 
