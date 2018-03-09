@@ -80,9 +80,9 @@ $(document).ready(function () {
   });
 });
 
+/*eslint no-unused-vars: "error"*/
 function compareUser(username) {
   var url;
-  var username;
   var chartParams;
   var weightChart;
   weightChart = {};
@@ -100,7 +100,7 @@ function compareUser(username) {
     min_y_from_data: true,
     colors: ['#3465a4']
   };
-  
+
   url = '/weight/api/get_comparison_weight_data/' + username;
 
   d3.json(url, function (json) {

@@ -78,9 +78,9 @@ $(document).ready(function () {
   });
 });
 
+/*eslint no-unused-vars: "error"*/
 function compareUser(username) {
   var url;
-  var username;
   var chartParams;
   var nutritionChart;
   nutritionChart = {};
@@ -98,7 +98,7 @@ function compareUser(username) {
     min_y_from_data: true,
     colors: ['#3465a4']
   };
-  
+
   url = '/nutrition/api/get_comparison_nutrition_data/' + username;
 
   d3.json(url, function (json) {
