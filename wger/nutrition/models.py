@@ -567,7 +567,6 @@ class Meal(models.Model):
         ordering = [
             "time",
         ]
-
     plan = models.ForeignKey(
         NutritionPlan, verbose_name=_('Nutrition plan'), editable=False)
     order = models.IntegerField(
@@ -624,7 +623,17 @@ class MealItem(models.Model):
     """
     An item (component) of a meal
     """
+    Planned = "Planned"
+    Consumed = "Consumed"
 
+    diary_options = (
+        (Planned, 'Planned'),
+        (Consumed, 'Consumed')
+    )
+    diary = models.CharField(max_length=50,
+                             choices=diary_options,
+                             default='Planned'
+                             )
     meal = models.ForeignKey(
         Meal, verbose_name=_('Nutrition plan'), editable=False)
     ingredient = models.ForeignKey(Ingredient, verbose_name=_('Ingredient'))
@@ -634,7 +643,6 @@ class MealItem(models.Model):
         null=True,
         blank=True,
     )
-
     order = models.IntegerField(
         verbose_name=_('Order'), blank=True, editable=False)
     amount = models.DecimalField(
