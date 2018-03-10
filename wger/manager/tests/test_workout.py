@@ -14,6 +14,7 @@
 
 import datetime
 import os
+from io import StringIO
 
 from django.core.urlresolvers import reverse
 
@@ -144,19 +145,17 @@ class AddWorkoutTestCase(WorkoutManagerTestCase):
         Test importing csv file
         """
         self.user_login()
-        response = self.client.get(
-            reverse('manager:workout:import_workouts'), follow=True)
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'workout/overview.html')
-        self.assertContains(response, 'form action=')
-
-        filename = os.path.join(
-            os.path.dirname(__file__),
-            os.path.pardir,
-            'test_file',
-            'tests.csv')
-
-        files = {'csv_file': open(filename, 'rb')}
+        data = '''
+            Date created,Comment,Days,Description,Exercise
+            2018-03-07,,"Tuesday
+            Wednesday
+            Thursday",demo,"Biceps curl with cable
+            Biceps curls with dumbbell"
+            2018-03-07,,"Tuesday
+            Wednesday
+            Thursday",demo,Biceps curls with barbell
+            '''
+        files = {'csv_file': StringIO(data)}
         response = self.client.post('/en/workout/import/', files, follow=True)
         self.assertEqual(response.status_code, 200)
 
