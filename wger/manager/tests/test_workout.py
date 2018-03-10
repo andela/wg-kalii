@@ -13,7 +13,6 @@
 # You should have received a copy of the GNU Affero General Public License
 
 import datetime
-import os
 from io import StringIO
 
 from django.core.urlresolvers import reverse
