@@ -10,9 +10,8 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-
-        ('gym', '0009_merge'),
         ('gym', '0007_auto_20180220_1515'),
+        ('gym', '0009_merge'),
     ]
 
     operations = [

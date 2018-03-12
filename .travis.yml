@@ -57,11 +57,8 @@ before_script:
 script:
   # Javascript and python linting
   - gulp lint
-
   # make migrations
-  - python manage.py makemigrations 
   - python manage.py migrate
-
   # Regular application
   - coverage run --source='.' ./manage.py test
 
