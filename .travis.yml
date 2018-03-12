@@ -59,7 +59,6 @@ script:
   - gulp lint
 
   # make migrations
-  - python manage.py makemigrations 
   - python manage.py migrate
 
   # Regular application
