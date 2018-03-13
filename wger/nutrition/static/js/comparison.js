@@ -13,13 +13,14 @@
 
  You should have received a copy of the GNU Affero General Public License
  */
+'use strict';
 
 function modifyTimePeriod(data, pastNumberDays) {
   var date;
   if (data.length && pastNumberDays !== 'all') {
       date = new Date();
       date.setDate(date.getDate() - pastNumberDays);
-      const filtered = MG.clone(data).filter(function (value) {
+      filtered = MG.clone(data).filter(function (value) {
         return value.date >= date;
       });
       return filtered;
