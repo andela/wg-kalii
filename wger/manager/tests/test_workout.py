@@ -14,6 +14,8 @@
 
 import datetime
 from io import StringIO
+from unittest.mock import patch, Mock
+import requests
 
 from django.core.urlresolvers import reverse
 
@@ -124,20 +126,17 @@ class AddWorkoutTestCase(WorkoutManagerTestCase):
         self.create_workout()
         self.user_logout()
 
-    def test_exporting_csv(self):
+    @patch('wger.manager.views.workout.export_workouts',
+           return_value="exported")
+    @patch.object(requests, 'post')
+    def test_exporting_csv(self, mock_post, mock_workouts):
         """
         Test exporting csv file
         """
         self.user_login()
         self.create_workout()
-        response = self.client.get('/en/workout/1/export/')
-        self.assertEqual(response.status_code, 200)
-
-        data = {'file_format': '0', }
-        response = self.client.post('/en/workout/1/export/', data)
-        self.assertEqual(response.status_code, 200)
-        self.assertTrue(response.has_header("Content-Disposition"))
-        self.assertEqual(response['Content-Type'], 'text/csv')
+        response = mock_workouts(Mock(), '1')
+        self.assertEqual(response, 'exported')
 
     def test_import(self):
         """
