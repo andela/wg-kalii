@@ -42,7 +42,7 @@ function drawChart(url, target) {
     xax_count: 10,
     target: target,
     x_accessor: 'date',
-    y_accessor: 'weight',
+    y_accessor: 'plan',
     min_y_from_data: true,
     colors: ['#3465a4']
   };
@@ -73,15 +73,14 @@ function drawChart(url, target) {
 }
 
 function compareUser(username) {
-  var url = '/weight/api/get_comparison_weight_data/' + username;
+  var url = '/nutrition/api/get_comparison_nutrition_data/' + username;
   var target = '#comparison_diagram';
   drawChart(url, target);
 }
 
 $(document).ready(function () {
-  var username = $('#current-username').data('currentUsername');
-  var url = '/weight/api/get_weight_data/' + username;
-  var target = '#weight_diagram';
+  var url = '/nutrition/api/get_nutrition_data/';
+  var target = '#nutrition_diagram';
   drawChart(url, target);
   compareUser('');
 });
