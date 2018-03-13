@@ -20,7 +20,7 @@ function modifyTimePeriod(data, pastNumberDays) {
   if (data.length && pastNumberDays !== 'all') {
     date = new Date();
     date.setDate(date.getDate() - pastNumberDays);
-    var filtered = MG.clone(data).filter(function (value) {
+    let filtered = MG.clone(data).filter(function (value) {
       return value.date >= date;
     });
     return filtered;
@@ -73,7 +73,7 @@ function drawChart(url, target) {
 
 function compareUser(username) {
   var url = '/weight/api/get_comparison_weight_data/' + username;
-  var target = '#comparison_diagram'
+  var target = '#comparison_diagram';
   drawChart(url, target);
 }
 
