@@ -17,10 +17,11 @@
 
 function modifyTimePeriod(data, pastNumberDays) {
   var date;
+  var filtered;
   if (data.length && pastNumberDays !== 'all') {
     date = new Date();
     date.setDate(date.getDate() - pastNumberDays);
-    let filtered = MG.clone(data).filter(function (value) {
+    filtered = MG.clone(data).filter(function (value) {
       return value.date >= date;
     });
     return filtered;
