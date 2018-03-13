@@ -8,6 +8,8 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
+
+        ('email', '0004_merge'),
         ('email', '0002_auto_20180220_1515'),
         ('email', '0004_merge'),
     ]
