@@ -62,5 +62,4 @@ urllib3==1.22
 wger==1.8
 sqlparse==0.2.4
 webencodings==0.5.1
-whitenoise==3.3.1
-yapf==0.20.2
+wger==1.8
