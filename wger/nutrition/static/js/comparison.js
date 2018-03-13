@@ -18,13 +18,13 @@
 function modifyTimePeriod(data, pastNumberDays) {
   var date;
   if (data.length && pastNumberDays !== 'all') {
-      date = new Date();
-      date.setDate(date.getDate() - pastNumberDays);
-      filtered = MG.clone(data).filter(function (value) {
-        return value.date >= date;
-      });
-      return filtered;
-    }
+    date = new Date();
+    date.setDate(date.getDate() - pastNumberDays);
+    var filtered = MG.clone(data).filter(function (value) {
+      return value.date >= date;
+    });
+    return filtered;
+  }
   return data;
 }
 
@@ -73,7 +73,7 @@ function drawChart(url, target) {
 
 function compareUser(username) {
   var url = '/nutrition/api/get_comparison_nutrition_data/' + username;
-  var target = '#comparison_diagram'
+  var target = '#comparison_diagram';
   drawChart(url, target);
 }
 

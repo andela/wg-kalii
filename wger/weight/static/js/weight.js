@@ -18,13 +18,13 @@
 function modifyTimePeriod(data, pastNumberDays) {
   var date;
   if (data.length && pastNumberDays !== 'all') {
-      date = new Date();
-      date.setDate(date.getDate() - pastNumberDays);
-      filtered = MG.clone(data).filter(function (value) {
-        return value.date >= date;
-      });
-      return filtered;
-    }
+    date = new Date();
+    date.setDate(date.getDate() - pastNumberDays);
+    var filtered = MG.clone(data).filter(function (value) {
+      return value.date >= date;
+    });
+    return filtered;
+  }
   return data;
 }
 
