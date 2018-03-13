@@ -13,6 +13,9 @@
 # You should have received a copy of the GNU Affero General Public License
 
 import datetime
+from io import StringIO
+from unittest.mock import patch, Mock
+import requests
 
 from django.core.urlresolvers import reverse
 
@@ -122,6 +125,37 @@ class AddWorkoutTestCase(WorkoutManagerTestCase):
         self.user_login()
         self.create_workout()
         self.user_logout()
+
+    @patch('wger.manager.views.workout.export_workouts',
+           return_value="exported")
+    @patch.object(requests, 'post')
+    def test_exporting_csv(self, mock_post, mock_workouts):
+        """
+        Test exporting csv file
+        """
+        self.user_login()
+        self.create_workout()
+        response = mock_workouts(Mock(), '1')
+        self.assertEqual(response, 'exported')
+
+    def test_import(self):
+        """
+        Test importing csv file
+        """
+        self.user_login()
+        data = '''
+            Date created,Comment,Days,Description,Exercise
+            2018-03-07,,"Tuesday
+            Wednesday
+            Thursday",demo,"Biceps curl with cable
+            Biceps curls with dumbbell"
+            2018-03-07,,"Tuesday
+            Wednesday
+            Thursday",demo,Biceps curls with barbell
+            '''
+        files = {'csv_file': StringIO(data)}
+        response = self.client.post('/en/workout/import/', files, follow=True)
+        self.assertEqual(response.status_code, 200)
 
 
 class DeleteTestWorkoutTestCase(WorkoutManagerDeleteTestCase):

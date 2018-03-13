@@ -25,6 +25,13 @@ from wger.nutrition.views import (ingredient, bmi, calculator, plan, meal,
 patterns_plan = [
     url(r'^overview/$', plan.overview, name='overview'),
     url(r'^add/$', plan.add, name='add'),
+    url(r'^comparison/$', plan.comparison, name='comparison'),
+    url(r'^api/get_nutrition_data/$',  # JS
+        plan.get_nutrition_data,
+        name='nutrition-data'),
+    url(r'^api/get_comparison_nutrition_data/(?P<username>[\w.@+-]+)$',  # JS
+        plan.get_comparison_nutrition_data,
+        name='comparison-nutrition-data'),
     url(r'^(?P<id>\d+)/view/$', plan.view, name='view'),
     url(r'^(?P<pk>\d+)/copy/$', plan.copy, name='copy'),
     url(r'^(?P<pk>\d+)/delete/$',

@@ -17,23 +17,27 @@
 import logging
 import uuid
 import datetime
+import csv
+from io import TextIOWrapper
 
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.template.context_processors import csrf
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.utils.translation import ugettext_lazy, ugettext as _
-from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.views.generic import DeleteView, UpdateView
 
-from wger.core.models import (RepetitionUnit, WeightUnit)
+from wger.core.models import (RepetitionUnit, WeightUnit, DaysOfWeek)
+from wger.exercises.models import Exercise
 from wger.manager.models import (Workout, WorkoutSession, WorkoutLog, Schedule,
-                                 Day)
+                                 Day, Set)
 from wger.manager.forms import (WorkoutForm, WorkoutSessionHiddenFieldsForm,
                                 WorkoutCopyForm)
 from wger.utils.generic_views import (WgerFormMixin, WgerDeleteMixin)
 from wger.utils.helpers import make_token
+from django.http.response import HttpResponse
 
 logger = logging.getLogger(__name__)
 
@@ -408,3 +412,77 @@ def timer(request, day_pk):
     context['weight_units'] = WeightUnit.objects.all()
     context['repetition_units'] = RepetitionUnit.objects.all()
     return render(request, 'workout/timer.html', context)
+
+
+@login_required
+def export_workouts(request, pk):
+    '''
+    exports user's workouts
+    '''
+    workouts = Workout.objects.filter(user=request.user, id=pk)
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; \
+        filename=' + str(request.user) + '_workouts.csv'
+    writer = csv.writer(response)
+    writer.writerow(['Date created',
+                     'Comment',
+                     'Days',
+                     'Description',
+                     'Exercise'])
+
+    for workout in workouts:
+        training_days = Day.objects.filter(training=workout.id)
+        for day in training_days:
+            workout_days = "\n".join(
+                [item.day_of_week for item in day.day.all()]
+            )
+            # filter exercise sets based on exerciseday
+            sets = Set.objects.filter(exerciseday=day.id)
+            for one_set in sets:
+                # get names of excercises
+                exercises = "\n".join(
+                    [exercise.name for exercise in one_set.exercises.all()]
+                )
+                writer.writerow([
+                    workout.creation_date,
+                    workout.comment, workout_days,
+                    day.description, exercises
+                ])
+
+    return response
+
+
+@login_required
+def import_workouts(request):
+    if request.POST and request.FILES:
+        csvfile = TextIOWrapper(
+            request.FILES['csv_file'].file,
+            encoding="utf-8"
+        )
+        reader = csv.DictReader(csvfile)
+        workouts = []
+        for row in reader:
+            workouts.append(dict(row))
+
+        for each_workout in workouts:
+            workout = Workout(
+                creation_date=each_workout["Date created"],
+                comment=each_workout["Comment"],
+                user=request.user)
+            workout.save()
+            day = Day(training=workout, description=each_workout["Description"])
+            day.save()
+
+            for day_name in each_workout["Days"].split("\n"):
+                day.day.add(
+                    DaysOfWeek.objects.filter(day_of_week=day_name).first()
+                )
+            one_set = Set(exerciseday=day)
+            one_set.save()
+
+            for exercise in each_workout["Exercise"].split("\n"):
+                one_set.exercises.add(
+                    Exercise.objects.filter(name=exercise).first()
+                )
+
+    return HttpResponseRedirect(reverse('manager:workout:overview'))

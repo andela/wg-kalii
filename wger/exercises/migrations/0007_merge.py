@@ -10,7 +10,6 @@ class Migration(migrations.Migration):
 
     dependencies = [
 
-
         ('exercises', '0006_merge'),
         ('exercises', '0004_auto_20180220_1515'),
 

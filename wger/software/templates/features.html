@@ -21,25 +21,23 @@
     <header>
         <div class="container">
             <div class="intro-text">
-                <div class="intro-heading">{% trans "Welcome to wger" %}</div>
-                <div class="intro-lead-in">{% trans "Your body." %}</div>
-                <div class="intro-lead-in">{% trans "Your workouts." %}</div>
-                <div class="intro-lead-in">{% trans "Your data." %}</div>
-                <div class="intro-lead-in">{% trans "Your progress." %}</div>
-                {% if allow_guest_users and not user.is_authenticated %}
-                    <a href="{% url 'core:user:demo-entries' %}" class="page-scroll btn btn-xl" rel="nofollow" style="margin-top: 1em;">
-                        {% trans "Try it now" %}
-                    </a>
-                {% endif %}
+                <div class="intro-heading">{% trans "<span class='welcome'>Welcome</span> to wger" %}</div>
+                <div class="typed-text"><span class="element"></span></div>
+
 
                 {% if not user.is_authenticated or user.userprofile.is_temporary %}
                     {% if allow_registration %}
-                        <a href="{% url 'core:user:registration' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;">
+                        {% if allow_guest_users and not user.is_authenticated %}
+                        <a href="{% url 'core:user:demo-entries' %}" class="page-scroll btn btn-xl my-buttons" rel="nofollow" style="margin-top: 1em;">
+                            {% trans "Try it now" %}
+                        </a>
+                    {% endif %}
+                        <a href="{% url 'core:user:registration' %}" class="page-scroll btn btn-xl " style="margin-top: 1em;">
                             {% trans "Register" %}
                         </a>
                     {% endif %}
 
-                    <a href="{% url 'core:user:login' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;">
+                    <a href="{% url 'core:user:login' %}" class="page-scroll btn btn-xl my-buttons" style="margin-top: 1em;">
                         {% trans "Login" %}
                     </a>
                 {% endif %}
@@ -52,7 +50,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2 class="section-heading text-light">{% trans "Your advantages" %}</h2>
+                    <h2 class="section-heading text-light">{% trans "What we offer" %}</h2>
                     <h3 class="section-subheading text-muted">
                         {% blocktrans trimmed %}
                             wger Workout Manager is a free, open source web application that manages
@@ -64,7 +62,7 @@
                 </div>
             </div>
             <div class="row text-center">
-                <div class="col-md-4">
+                <div class="col-md-4 my-info">
                     <span class="fa-stack fa-4x">
                         <i class="fa fa-circle fa-stack-2x text-primary"></i>
                         <i class="fa fa-user fa-stack-1x fa-inverse"></i>
@@ -79,7 +77,7 @@
                         {% endblocktrans %}
                     </p>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 my-info">
                     <span class="fa-stack fa-4x">
                         <i class="fa fa-circle fa-stack-2x text-primary"></i>
                         <i class="fa fa-cutlery fa-stack-1x fa-inverse"></i>
@@ -94,7 +92,7 @@
                         {% endblocktrans %}
                     </p>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 my-info">
                     <span class="fa-stack fa-4x">
                         <i class="fa fa-circle fa-stack-2x text-primary"></i>
                         <i class="fa fa-line-chart fa-stack-1x fa-inverse"></i>
@@ -113,11 +111,11 @@
         </div>
     </section>
 
-    <section id="about" class="bg-light-gray">
+    <section id="about" class="bg-light-gray ss-style-doublediagonal">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">{% trans "Features" %}</h2>
+                    <h2 class="section-heading ">{% trans "Features" %}</h2>
                     <h3 class="section-subheading text-muted">{% trans "Among many others" %}</h3>
                 </div>
             </div>
@@ -128,8 +126,8 @@
                             <div class="timeline-image">
                                 <img class="img-circle img-responsive" src="{% static 'images/weight-chart.png' %}" alt="">
                             </div>
-                            <div class="timeline-panel">
-                                <div class="timeline-heading">
+                            <div class="timeline-panel weight">
+                                <div class="timeline-heading ">
                                     <h4>{% trans "Weight tracker" %}</h4>
                                 </div>
                                 <div class="timeline-body">
@@ -147,8 +145,9 @@
                             <div class="timeline-image">
                                 <img class="img-circle img-responsive" src="{% static 'images/calendar.png' %}" alt="">
                             </div>
-                            <div class="timeline-panel">
-                                <div class="timeline-heading">
+                            <div class="timeline-panel calendar">
+                                <div class="timeline-heading ">
+
                                     <h4>{% trans 'Calendar' %}</h4>
                                 </div>
                                 <div class="timeline-body">
@@ -166,8 +165,9 @@
                             <div class="timeline-image">
                                 <img class="img-circle img-responsive" src="{% static 'images/muscle-overview.png' %}" alt="">
                             </div>
-                            <div class="timeline-panel">
-                                <div class="timeline-heading">
+                            <div class="timeline-panel exercise">
+                                <div class="timeline-heading ">
+
                                     <h4>{% trans 'Exercise database' %}</h4>
                                 </div>
                                 <div class="timeline-body">
@@ -185,8 +185,9 @@
                             <div class="timeline-image">
                                 <img class="img-circle img-responsive" src="{% static 'images/gym-management.png' %}" alt="">
                             </div>
-                            <div class="timeline-panel">
-                                <div class="timeline-heading">
+                            <div class="timeline-panel gym">
+                                <div class="timeline-heading ">
+
                                     <h4>{% trans 'Gym management' %}</h4>
                                 </div>
                                 <div class="timeline-body">
@@ -204,8 +205,8 @@
                             <div class="timeline-image">
                                 <img class="img-circle img-responsive" src="{% static 'images/rest-api.png' %}" alt="">
                             </div>
-                            <div class="timeline-panel">
-                                <div class="timeline-heading">
+                            <div class="timeline-panel rest">
+                                <div class="timeline-heading ">
                                     <h4>{% trans "REST API" %}</h4>
                                 </div>
                                 <div class="timeline-body">
@@ -219,7 +220,7 @@
                             </div>
                         </li>
                         <li class="timeline">
-                            <div class="timeline-image">
+                            <div class="timeline-image source">
                                 <h4>{% blocktrans trimmed %}100% Free
                                     <br>and
                                     <br>Open Source{% endblocktrans %}
@@ -232,7 +233,103 @@
         </div>
     </section>
 
+<script src="https://cdn.rawgit.com/mattboldt/typed.js/master/lib/typed.min.js"></script>
+<script>
 
+  var typed = new Typed('.element', {
+  strings: ["Your body.","Your workouts.", "Your data.", "Your progress." ],
+    typeSpeed: 60,
+    backSpeed: 30,
+    backDelay: 750,
+    startDelay: 1000,
+    loop: true,
+  });
 
-
+</script>
+<script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
+<script>
+    window.sr = ScrollReveal();
+    sr.reveal('.intro-heading', {
+    duration: 2000,
+    distance: '200px',
+    origin: 'left'
+    });
+    sr.reveal('.typed-text', {
+    duration: 2000,
+    distance: '200px',
+    origin: 'center'
+    });
+    sr.reveal('.my-buttons', {
+    duration: 2000,
+    distance: '100px',
+    delay: 2000,
+    origin: 'bottom'
+    });
+    sr.reveal('.bg-darkest-gray', {
+    duration: 2000,
+    distance: '200px',
+    viewFactor: 0.2,
+    origin: 'right'
+    });
+    sr.reveal('.my-info', {
+    duration: 2000,
+    distance: '300px',
+    viewFactor: 0.2,
+    origin: 'bottom'
+    });
+    sr.reveal('.bg-light-gray', {
+    duration: 2000,
+    distance: '200px',
+    viewFactor: 0.2,
+    origin: 'left'
+    });
+    sr.reveal('.section-heading', {
+    duration: 2000,
+    distance: '100px',
+    viewFactor: 0.2,
+    origin: 'left'
+    });
+    sr.reveal('.weight', {
+    duration: 2000,
+    delay: 1000,
+    distance: '200px',
+    viewFactor: 0.8,
+    origin: 'left'
+    });
+    sr.reveal('.calendar', {
+    duration: 2000,
+    delay: 1000,
+    distance: '200px',
+    viewFactor: 0.8,
+    origin: 'right'
+    });
+    sr.reveal('.exercise', {
+    duration: 2000,
+    delay: 1000,
+    distance: '200px',
+    viewFactor: 0.8,
+    origin: 'left'
+    });
+    sr.reveal('.gym', {
+    duration: 2000,
+    delay: 1000,
+    distance: '200px',
+    viewFactor: 0.8,
+    origin: 'right'
+    });
+    sr.reveal('.rest', {
+    duration: 2000,
+    delay: 1000,
+    distance: '200px',
+    viewFactor: 0.8,
+    origin: 'left'
+    });
+    sr.reveal('.source', {
+    duration: 2000,
+    delay: 1000,
+    distance: '200px',
+    viewFactor: 0.8,
+    origin: 'bottom'
+    });
+</script>
 {% endblock %}
