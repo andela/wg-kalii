@@ -32,7 +32,7 @@ msgstr "Упражнения"
 
 #: config/models.py:46
 msgid "Ingredients"
-msgstr ""
+msgstr "Съставки"
 
 #: config/models.py:111 gym/templates/gym/list.html:63
 msgid "Default gym"
@@ -47,7 +47,7 @@ msgstr ""
 #: config/templates/language/overview.html:4
 #: core/templates/navigation.html:204
 msgid "Languages"
-msgstr ""
+msgstr "Езици"
 
 #: config/templates/language/overview.html:11
 #: config/templates/language/view.html:21 core/models.py:44
@@ -116,7 +116,7 @@ msgstr "Добави"
 #: core/templates/user/overview.html:481 gym/views/admin_config.py:51
 #: gym/views/user_config.py:65
 msgid "Configuration"
-msgstr ""
+msgstr "Настройки"
 
 #: config/templates/language/view.html:35
 msgid ""
@@ -128,7 +128,7 @@ msgstr ""
 
 #: config/templates/language/view.html:44 gym/templates/contract/list.html:36
 msgid "Show"
-msgstr ""
+msgstr "Показване"
 
 #: config/templates/language/view.html:84
 #: config/templates/language/view.html:86 config/views/gym_config.py:48
@@ -262,7 +262,7 @@ msgstr ""
 #: nutrition/views/unit.py:118
 #, python-brace-format
 msgid "Edit {0}"
-msgstr ""
+msgstr "Редактиране на {0}"
 
 #: core/demo.py:83
 msgid "Sample workout"
@@ -295,7 +295,7 @@ msgstr "Празно място за тренировъчен план"
 
 #: core/forms.py:39
 msgid "Username or email"
-msgstr ""
+msgstr "ел. поща"
 
 #: core/forms.py:59 core/templates/user/overview.html:286
 #: core/templates/user/preferences.html:31
@@ -308,8 +308,9 @@ msgid "Email"
 msgstr "Е-мейл"
 
 #: core/forms.py:60
+#, fuzzy
 msgid "Used for password resets and, optionally, email reminders."
-msgstr ""
+msgstr "ел. пощапарола"
 
 #: core/forms.py:87
 msgid "This email is already used."
@@ -317,25 +318,25 @@ msgstr "Този email е вече използван."
 
 #: core/forms.py:91 gym/views/export.py:60 gym/views/gym.py:188
 msgid "First name"
-msgstr ""
+msgstr "Първо име"
 
 #: core/forms.py:93 core/templates/user/overview.html:282
 #: gym/views/export.py:61 gym/views/gym.py:188
 msgid "Last name"
-msgstr ""
+msgstr "Фамилия"
 
 #: core/forms.py:108 gym/templates/gym/new_user.html:26
 #: gym/templates/gym/reset_user_password.html:24 gym/views/gym.py:188
 msgid "Password"
-msgstr ""
+msgstr "Парола"
 
 #: core/forms.py:110
 msgid "Please enter your current password."
-msgstr ""
+msgstr "Въведете текущата парола:"
 
 #: core/forms.py:122
 msgid "Invalid password"
-msgstr ""
+msgstr "Неправилна парола"
 
 #: core/forms.py:131 core/forms.py:169 manager/forms.py:54
 msgid "Confirmation text"
@@ -347,7 +348,7 @@ msgstr "Като мярка за сигурност, моля напишете �
 
 #: core/forms.py:152
 msgid "Contact"
-msgstr ""
+msgstr "Контакт"
 
 #: core/forms.py:153
 msgid "Some way of answering you (email, etc.)"
@@ -355,31 +356,31 @@ msgstr ""
 
 #: core/forms.py:159 exercises/models.py:481 manager/models.py:593
 msgid "Comment"
-msgstr "Коментирай"
+msgstr "Коментар"
 
 #: core/forms.py:160
 msgid "What do you want to say?"
-msgstr "Какво искаш да кажеш?"
+msgstr "Какво искате да направите?"
 
 #: core/models.py:86
 msgid "Male"
-msgstr ""
+msgstr "Мъж"
 
 #: core/models.py:87
 msgid "Female"
-msgstr ""
+msgstr "Жена"
 
 #: core/models.py:94
 msgid "Low"
-msgstr ""
+msgstr "Нисък"
 
 #: core/models.py:95
 msgid "Medium"
-msgstr ""
+msgstr "Средна"
 
 #: core/models.py:96
 msgid "High"
-msgstr ""
+msgstr "Висок"
 
 #: core/models.py:102
 msgid "Metric (kilogram)"
@@ -391,7 +392,7 @@ msgstr ""
 
 #: core/models.py:130
 msgid "Show exercise comments"
-msgstr "Покажи коментарите на упражнението"
+msgstr "Покажи коментара на архива"
 
 #: core/models.py:131
 msgid "Check to show exercise comments on the workout view"
